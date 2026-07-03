@@ -480,7 +480,7 @@
             const now = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
             document.getElementById('clockDisplay').innerHTML = `
-                <i class="fa-regular fa-calendar-days"></i> ${now.toLocaleDateString('th-TH', options)} | 
+                <i class="fa-regular fa-calendar-days"></i> ${now.toLocaleDateString('th-TH', options)}  
                 <i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('th-TH', { hour12: false })} น.
             `;
             currentMonthName = now.toLocaleDateString('th-TH', { month: 'long' });
