@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS - Central Monitoring System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakrapetch:wght=400;600;700&family=Inter:wght=300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --card-hover: #1e293b;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+            --primary: #38bdf8;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Chakrapetch', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 24px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        header h1 i { color: var(--primary); }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .live-status {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .datetime-display {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid #334155;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Chakrapetch', sans-serif;
+        }
+
+        .datetime-display i { color: var(--primary); }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #1e293b;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            background-color: var(--card-hover);
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px -10px rgba(14, 165, 233, 0.3);
+        }
+
+        .card.active {
+            border-color: var(--primary);
+            background-color: var(--card-hover);
+            box-shadow: inset 0 0 12px rgba(14, 165, 233, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-header .icon-o2 {
+            font-weight: 700;
+            color: #0ea5e9;
+            background: rgba(14, 165, 233, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .card-header i { font-size: 20px; }
+
+        .card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .card-sub-value-row {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: flex-start; 
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .card-unit {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-left: 2px;
+            font-weight: 600;
+        }
+
+        .status-widget-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .card-status {
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-normal { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .status-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .status-info { background: rgba(14, 165, 233, 0.15); color: var(--primary); }
+
+        .detail-section {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #1e293b;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .date-selector-container {
+            margin-bottom: 24px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 20px;
+        }
+        
+        .date-selector-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .date-btn-wrapper {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 14px;
+            scroll-behavior: smooth;
+        }
+
+        .date-btn-wrapper::-webkit-scrollbar { height: 8px; }
+        .date-btn-wrapper::-webkit-scrollbar-track { background: #111827; border-radius: 10px; }
+        .date-btn-wrapper::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; border: 1px solid #1e293b; }
+
+        .date-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            padding: 10px 18px;
+            min-width: 85px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .date-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .date-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #0b0f19;
+            font-weight: 700;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+
+        .date-btn:disabled {
+            background: #0f1420;
+            border-color: #1e293b;
+            color: #475569;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 260px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .multi-chart-wrapper {
+            margin-bottom: 24px;
+        }
+        .multi-chart-wrapper:last-child {
+            margin-bottom: 0;
+        }
+        .chart-sub-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-heart-pulse"></i> แบบจำลองระบบเว็ป Monitor Dashboard</h1>
+        <div class="header-meta">
+            <div class="live-status">
+                <div class="pulse-dot"></div> ระบบกำลังทำงาน REAL-TIME
+            </div>
+            <div class="datetime-display" id="clockDisplay">
+                <i class="fa-regular fa-clock"></i> กําลังโหลดเวลา...
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+        
+        <!-- ระบบก๊าซออกซิเจน -->
+        <div class="card" id="card-oxygen" onclick="showDetails('oxygen', 'ระบบก๊าซออกซิเจน (O₂)')">
+            <div>
+                <div class="card-header">
+                    <span>ระบบก๊าซออกซิเจน (O₂)</span>
+                    <span class="icon-o2">O₂</span>
+                </div>
+                <div class="card-value"><span id="val-o2-total">84.5</span><span class="card-unit">%</span></div>
+                <div class="card-sub-value-row">
+                    <span>แรงดันฝั่งซ้าย: <span id="val-o2-left">1730</span><span class="card-unit">PSI</span></span>
+                    <span>แรงดันฝั่งขวา: <span id="val-o2-right">1650</span><span class="card-unit">PSI</span></span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-oxygen-container"></div>
+        </div>
+
+        <!-- ไนตรัสออกไซด์ -->
+        <div class="card" id="card-nitrous" onclick="showDetails('nitrous', 'แรงดันก๊าซไนตรัสออกไซด์ (N₂O)')">
+            <div>
+                <div class="card-header">
+                    <span>ระบบไนตรัสออกไซด์ (N₂O)</span>
+                    <i class="fa-solid fa-mask-ventilator" style="color: #a855f7;"></i>
+                </div>
+                <div class="card-value"><span id="val-nitrous">52.4</span><span class="card-unit">psi</span></div>
+                <div class="card-sub-value-row" style="height: 21px;">&nbsp;</div> 
+            </div>
+            <div class="status-widget-container" id="status-nitrous-container"></div>
+        </div>
+
+        <!-- ระบบห้องผ่าตัด OR -->
+        <div class="card" id="card-or_room" onclick="showDetails('or_room', 'ระบบควบคุมห้องผ่าตัด OR')">
+            <div>
+                <div class="card-header">
+                    <span>ห้องผ่าตัด OR System</span>
+                    <i class="fa-solid fa-fan" style="color: #0ea5e9;"></i>
+                </div>
+                <!-- ลบรูปประตูออกตามบรีฟ คงเหลือเพียงข้อความสัญลักษณ์ -->
+                <div class="card-value">
+                    <span id="val-or-text">ช่องลมเปิด 45°</span>
+                </div>
+                <div class="card-sub-value-row">
+                    <span>สถานะความดัน: <strong id="val-or-pressure-text" style="color: var(--success); font-weight: 700;">Positive Pressure</strong></span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-or-container"></div>
+        </div>
+
+        <!-- ค่าน้ำทางการแพทย์ -->
+        <div class="card" id="card-water" onclick="showDetails('water', 'ระบบน้ำทางการแพทย์')">
+            <div>
+                <div class="card-header">
+                    <span>คุณภาพน้ำบ่อบำบัดน้ำเสีย</span>
+                    <i class="fa-solid fa-droplet" style="color: #3b82f6;"></i>
+                </div>
+                <div class="card-value" style="font-size: 20px; line-height: 1.4;">
+                    <span id="val-ph">7.2</span><span class="card-unit">pH</span> | 
+                    <span id="val-cl">0.30</span><span class="card-unit">mg/L</span> | 
+                    <span id="val-do">6.5</span><span class="card-unit">mg/L</span>
+                </div>
+                <div class="card-sub-value-row" style="font-size:12px; margin-bottom: 6px;">
+                    <span>pH / คลอรีน / Dissolved Oxygen</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-water-container"></div>
+        </div>
+
+        <!-- ระบบอากาศในอาคาร -->
+        <div class="card" id="card-air" onclick="showDetails('air', 'คุณภาพอากาศภายในอาคาร')">
+            <div>
+                <div class="card-header">
+                    <span>คุณภาพอากาศภายในอาคาร</span>
+                    <i class="fa-solid fa-wind" style="color: #10b981;"></i>
+                </div>
+                <div class="card-value" style="font-size: 20px; line-height: 1.4;">
+                    <span id="val-air">21</span><span class="card-unit" style="font-size:11px;">µg/m³</span> | 
+                    <span id="val-temp">24.5</span><span class="card-unit" style="font-size:11px;">°C</span> | 
+                    <span id="val-co2">520</span><span class="card-unit" style="font-size:11px;">ppm</span>
+                </div>
+                <div class="card-sub-value-row" style="font-size:12px; margin-bottom: 6px;">
+                    <span>PM2.5 / Temp / CO₂</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-air-container"></div>
+        </div>
+
+    </div>
+
+    <div class="detail-section" id="detailSection">
+        <div class="detail-title" id="detailTitle"></div>
+        
+        <div class="date-selector-container">
+            <div class="date-selector-label"><i class="fa-regular fa-calendar-check" style="color:var(--primary)"></i> เลือกวันที่ต้องการดูสถิติ:</div>
+            <div class="date-btn-wrapper" id="dateButtonsContainer"></div>
+        </div>
+
+        <div id="dynamicChartsContainer"></div>
+    </div>
+
+    <script>
+        let initializedCharts = {}; 
+        let currentMonthName = "";
+        let currentSelectedType = "";
+        let currentSelectedTitle = "";
+        let activeDaySelected = null;
+        let liveRuntimeStorage = {};
+        let internalPressureState = 1; 
+
+        const baseHoursLabel = [
+            '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', 
+            '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', 
+            '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
+        ];
+
+        function getDaysInCurrentMonth() {
+            const now = new Date();
+            return new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+        }
+
+        function generateFilteredData(min, max, baseData, isToday, isBinary = false) {
+            let mockData = [];
+            const now = new Date();
+            const currentHour = now.getHours();
+
+            for (let i = 0; i < 24; i++) {
+                if (isToday && i > currentHour) {
+                    mockData.push(null);
+                } else {
+                    if (isBinary) {
+                        mockData.push(Math.random() > 0.15 ? 1 : 0);
+                    } else if (baseData && baseData[i] !== undefined) {
+                        let variance = (Math.random() - 0.5) * (max - min) * 0.15;
+                        let val = baseData[i] + variance;
+                        mockData.push(parseFloat(Math.max(min, Math.min(max, val)).toFixed(1)));
+                    } else {
+                        mockData.push(parseFloat((Math.random() * (max - min) + min).toFixed(1)));
+                    }
+                }
+            }
+            return mockData;
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+            document.getElementById('clockDisplay').innerHTML = `
+                <i class="fa-regular fa-calendar-days"></i> ${now.toLocaleDateString('th-TH', options)} | 
+                <i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('th-TH', { hour12: false })} น.
+            `;
+            currentMonthName = now.toLocaleDateString('th-TH', { month: 'long' });
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function runLiveDashboardUpdates() {
+            setInterval(() => {
+                const now = new Date();
+                const currentHour = now.getHours();
+                const todayDate = now.getDate();
+
+                // 1. Oxygen Update
+                let currentO2 = parseFloat(document.getElementById('val-o2-total').innerText);
+                currentO2 = Math.max(70, Math.min(100, currentO2 + (Math.random() - 0.5) * 2));
+                document.getElementById('val-o2-total').innerText = Math.round(currentO2);
+
+                let o2Left = parseInt(document.getElementById('val-o2-left').innerText);
+                o2Left = Math.max(1100, Math.min(1950, o2Left + Math.round((Math.random() - 0.5) * 30)));
+                document.getElementById('val-o2-left').innerText = o2Left;
+
+                let o2Right = parseInt(document.getElementById('val-o2-right').innerText);
+                o2Right = Math.max(1000, Math.min(1600, o2Right + Math.round((Math.random() - 0.5) * 30)));
+                document.getElementById('val-o2-right').innerText = o2Right;
+
+                let o2Container = document.getElementById('status-oxygen-container');
+                o2Container.innerHTML = "";
+                if (currentO2 < 80) {
+                    o2Container.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-circle-exclamation"></i> O₂ ต่ำเกณฑ์</span>`;
+                } else {
+                    o2Container.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> O₂ ปกติ</span>`;
+                }
+                o2Container.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> แรงดันฝั่งซ้าย-ขวาปกติ</span>`;
+
+
+                // 2. Nitrous Update 
+                let nitrous = parseFloat(document.getElementById('val-nitrous').innerText);
+                nitrous = Math.max(45, Math.min(58, nitrous + (Math.random() - 0.5) * 1.8));
+                document.getElementById('val-nitrous').innerText = nitrous.toFixed(1);
+                
+                let nitrousContainer = document.getElementById('status-nitrous-container');
+                nitrousContainer.innerHTML = "";
+                if (nitrous < 50.0) {
+                    nitrousContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-circle-exclamation"></i> แรงดัน N₂O ต่ำเกินไป</span>`;
+                } else {
+                    nitrousContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> N₂O ปกติ</span>`;
+                }
+
+
+                // 3. OR System Update -> ลบรูปประตู + เช็คเฉพาะสถานะ Fresh Air
+                let currentOrText = document.getElementById('val-or-text').innerText;
+                let currentAngle = parseInt(currentOrText.replace(/[^0-9]/g, '')) || 45;
+                currentAngle = Math.max(0, Math.min(90, currentAngle + Math.round((Math.random() - 0.5) * 4)));
+                document.getElementById('val-or-text').innerHTML = `ช่องลมเปิด ${currentAngle}°`;
+
+                if (Math.random() > 0.95) {
+                    internalPressureState = internalPressureState === 1 ? 0 : 1;
+                }
+                const pTextNode = document.getElementById('val-or-pressure-text');
+                if (internalPressureState === 1) {
+                    pTextNode.innerText = "Positive Pressure";
+                    pTextNode.style.color = "var(--success)";
+                } else {
+                    pTextNode.innerText = "Negative Pressure";
+                    pTextNode.style.color = "var(--danger)";
+                }
+                
+                // ปรับ widget ด้านล่างให้แสดงแค่ Fresh Air ทำงานปกติ หรือ ผิดปกติ เท่านั้น (ไม่แสดงแรงดันห้องแล้ว)
+                let orContainer = document.getElementById('status-or-container');
+                orContainer.innerHTML = "";
+                if (currentAngle > 75 || currentAngle < 5) {
+                    orContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-triangle-exclamation"></i> Fresh Air ผิดปกติ</span>`;
+                } else {
+                    orContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> Fresh Air ทำงานปกติ</span>`;
+                }
+
+
+                // 4. Water System Update
+                let phVal = parseFloat(document.getElementById('val-ph').innerText);
+                phVal = Math.max(6.5, Math.min(8.2, phVal + (Math.random() - 0.5) * 0.08));
+                document.getElementById('val-ph').innerText = phVal.toFixed(1);
+
+                let clVal = parseFloat(document.getElementById('val-cl').innerText);
+                clVal = Math.max(0.1, Math.min(0.6, clVal + (Math.random() - 0.5) * 0.03));
+                document.getElementById('val-cl').innerText = clVal.toFixed(2);
+
+                let doVal = parseFloat(document.getElementById('val-do').innerText);
+                doVal = Math.max(3.5, Math.min(9.0, doVal + (Math.random() - 0.5) * 0.15));
+                document.getElementById('val-do').innerText = doVal.toFixed(1);
+
+                let waterContainer = document.getElementById('status-water-container');
+                waterContainer.innerHTML = "";
+                
+                if (phVal < 6.8 || phVal > 7.8) {
+                    waterContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-circle-exclamation"></i> pH ผิดปกติ</span>`;
+                } else {
+                    waterContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> pH ปกติ</span>`;
+                }
+                if (clVal < 0.2) {
+                    waterContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-circle-exclamation"></i> คลอรีนต่ำ</span>`;
+                } else {
+                    waterContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> คลอรีนปกติ</span>`;
+                }
+                if (doVal < 4.5) {
+                    waterContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-circle-exclamation"></i> DO ต่ำเกินไป</span>`;
+                } else {
+                    waterContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> DO ปกติ</span>`;
+                }
+
+
+                // 5. Air System Update
+                let airVal = parseInt(document.getElementById('val-air').innerText);
+                airVal = Math.max(5, Math.min(50, airVal + Math.round((Math.random() - 0.5) * 2)));
+                document.getElementById('val-air').innerText = airVal;
+
+                let tempVal = parseFloat(document.getElementById('val-temp').innerText);
+                tempVal = Math.max(18, Math.min(28, tempVal + (Math.random() - 0.5) * 0.2));
+                document.getElementById('val-temp').innerText = tempVal.toFixed(1);
+
+                let co2Val = parseInt(document.getElementById('val-co2').innerText);
+                co2Val = Math.max(350, Math.min(950, co2Val + Math.round((Math.random() - 0.5) * 15)));
+                document.getElementById('val-co2').innerText = co2Val;
+
+                let airContainer = document.getElementById('status-air-container');
+                airContainer.innerHTML = "";
+
+                if (airVal > 22) { 
+                    airContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-circle-exclamation"></i> PM2.5 ปานกลาง-สูง</span>`;
+                } else {
+                    airContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> PM2.5 ปกติ</span>`;
+                }
+                if (tempVal > 26.5) {
+                    airContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-temperature-high"></i> อุณหภูมิสูงเกิน</span>`;
+                } else {
+                    airContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> อุณหภูมิปกติ</span>`;
+                }
+                if (co2Val > 800) {
+                    airContainer.innerHTML += `<span class="card-status status-danger"><i class="fa-solid fa-cloud"></i> CO₂ สูงเกินเกณฑ์</span>`;
+                } else {
+                    airContainer.innerHTML += `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> CO₂ ปกติ</span>`;
+                }
+
+                // Sync Charts
+                if (activeDaySelected === todayDate && Object.keys(initializedCharts).length > 0) {
+                    for (let key in initializedCharts) {
+                        let chartObj = initializedCharts[key];
+                        if (chartObj && liveRuntimeStorage[key] && liveRuntimeStorage[key][currentHour] !== undefined) {
+                            
+                            if (key === 'o2_total') liveRuntimeStorage[key][currentHour] = Math.round(currentO2);
+                            else if (key === 'o2_left') liveRuntimeStorage[key][currentHour] = o2Left;
+                            else if (key === 'o2_right') liveRuntimeStorage[key][currentHour] = o2Right;
+                            else if (key === 'nitrous_p') liveRuntimeStorage[key][currentHour] = parseFloat(nitrous);
+                            else if (key === 'or_angle') liveRuntimeStorage[key][currentHour] = currentAngle;
+                            else if (key === 'or_pressure') liveRuntimeStorage[key][currentHour] = internalPressureState;
+                            else if (key === 'water_ph') liveRuntimeStorage[key][currentHour] = parseFloat(phVal.toFixed(1));
+                            else if (key === 'water_cl') liveRuntimeStorage[key][currentHour] = parseFloat(clVal.toFixed(2));
+                            else if (key === 'water_do') liveRuntimeStorage[key][currentHour] = parseFloat(doVal.toFixed(1));
+                            else if (key === 'air_pm') liveRuntimeStorage[key][currentHour] = airVal;
+                            else if (key === 'air_temp') liveRuntimeStorage[key][currentHour] = parseFloat(tempVal.toFixed(1));
+                            else if (key === 'air_co2') liveRuntimeStorage[key][currentHour] = co2Val;
+
+                            chartObj.data.datasets[0].data = liveRuntimeStorage[key];
+                            chartObj.update('none');
+                        }
+                    }
+                }
+
+            }, 3000);
+        }
+        
+        runLiveDashboardUpdates();
+
+        function destoryCharts() {
+            for (let key in initializedCharts) {
+                if (initializedCharts[key]) {
+                    initializedCharts[key].destroy();
+                }
+            }
+            initializedCharts = {};
+            liveRuntimeStorage = {};
+        }
+
+        function showDetails(type, title) {
+            currentSelectedType = type;
+            currentSelectedTitle = title;
+
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            const selectedCard = document.getElementById(`card-${type}`);
+            if(selectedCard) selectedCard.classList.add('active');
+
+            document.getElementById('detailSection').style.display = 'block';
+
+            const totalDays = getDaysInCurrentMonth();
+            const btnContainer = document.getElementById('dateButtonsContainer');
+            btnContainer.innerHTML = "";
+
+            const now = new Date();
+            const todayDate = now.getDate();
+
+            for (let i = 1; i <= totalDays; i++) {
+                const btn = document.createElement('button');
+                btn.className = `date-btn ${i === todayDate ? 'active' : ''}`;
+                btn.innerText = `วันที่ ${i}`;
+                
+                if (i > todayDate) {
+                    btn.disabled = true;
+                } else {
+                    btn.onclick = function() {
+                        document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        renderSectionCharts(i);
+                    };
+                }
+                btnContainer.appendChild(btn);
+            }
+
+            renderSectionCharts(todayDate);
+            
+            setTimeout(() => {
+                const activeBtn = btnContainer.querySelector('.date-btn.active');
+                if(activeBtn) {
+                    btnContainer.scrollLeft = activeBtn.offsetLeft - (btnContainer.offsetWidth / 2) + (activeBtn.offsetWidth / 2);
+                }
+            }, 100);
+        }
+
+        const dataTemplates = {
+            oxygen: [
+                { key: 'o2_total', label: 'แรงดันรวม (%)', color: '#0ea5e9', min: 0, max: 100, base: [85,84,84,83,82,85,88,87,85,82,80,78,75,72,70,74,78,81,83,85,86,85,84,84] },
+                { key: 'o2_left', label: 'แรงดันฝั่งซ้าย (PSI)', color: '#10b981', min: 0, max: 2000, base: [1650,1650,1700,1700,1650,1600,1550,1500,1450,1400,1350,1300,1250,1200,1150,1900,1850,1800,1800,1750,1750,1700,1700,1650] },
+                { key: 'o2_right', label: 'แรงดันฝั่งขวา (PSI)', color: '#a855f7', min: 0, max: 2000, base: [1150,1200,1200,1300,1400,1500,1500,1450,1400,1350,1300,1250,1200,1150,1150,1150,1200,1250,1300,1350,1400,1450,1300,1150] }
+            ],
+            nitrous: [
+                { key: 'nitrous_p', label: 'แรงดันก๊าซ N₂O (psi)', color: '#f43f5e', min: 30, max: 70, base: [54,55,53,52,54,55,52,50,51,53,54,52,48,47,51,52,53,54,55,53,52,54,51,52] }
+            ],
+            or_room: [
+                { key: 'or_angle', label: 'มุมเปิดบานประตูลม (องศา °)', color: '#38bdf8', min: 0, max: 90, base: [45,50,55,60,45,30,15,0,0,20,45,75,90,85,60,45,30,10,0,0,15,45,50,45], isBinary: false },
+                { key: 'or_pressure', label: 'สถานะแรงดันภายในห้องห้องผ่าตัด (1 = Positive Pressure, 0 = Negative)', color: '#a855f7', min: 0, max: 1, base: [], isBinary: true }
+            ],
+            water: [
+                { key: 'water_ph', label: 'ระบบวัดค่ากรด-ด่าง (pH)', color: '#60a5fa', min: 5, max: 10, base: [7.2,7.2,7.3,7.1,7.2,7.4,7.3,7.2,7.1,7.2,7.3,7.2,7.2,7.3,7.1,7.4,7.2,7.3,7.2,7.1,7.2,7.3,7.2,7.2] },
+                { key: 'water_cl', label: 'ปริมาณคลอรีนตกค้าง (mg/L)', color: '#2dd4bf', min: 0, max: 1, base: [0.31,0.32,0.30,0.29,0.30,0.33,0.35,0.34,0.32,0.30,0.29,0.28,0.30,0.31,0.32,0.33,0.31,0.30,0.29,0.32,0.31,0.30,0.31,0.30] },
+                { key: 'water_do', label: 'ปริมาณออกซิเจนละลายน้ำ DO (mg/L)', color: '#e11d48', min: 0, max: 12, base: [6.5,6.4,6.6,6.3,6.2,6.5,6.8,6.7,6.5,6.2,6.0,5.8,5.9,6.1,6.3,6.4,6.2,6.1,6.3,6.5,6.6,6.4,6.3,6.5] }
+            ],
+            air: [
+                { key: 'air_pm', label: 'ปริมาณฝุ่นละออง (PM 2.5 µg/m³)', color: '#10b981', min: 0, max: 60, base: [15,14,13,12,15,18,22,26,24,21,20,19,18,17,16,15,18,21,23,25,22,19,17,16] },
+                { key: 'air_temp', label: 'อุณหภูมิภายในอาคาร (°C)', color: '#fb923c', min: 15, max: 35, base: [23.1,22.8,22.5,22.2,22.4,23.0,23.5,24.0,24.5,25.0,25.4,25.8,26.0,25.9,25.5,25.1,24.8,24.5,24.2,24.0,23.8,23.6,23.4,23.2] },
+                { key: 'air_co2', label: 'ปริมาณก๊าซคาร์บอนไดออกไซด์ (CO₂ ppm)', color: '#a855f7', min: 300, max: 1000, base: [450,440,435,430,445,470,520,580,610,630,650,640,620,590,570,560,590,620,640,660,610,550,490,470] }
+            ]
+        };
+
+        function renderSectionCharts(dayNumber) {
+            destoryCharts();
+            activeDaySelected = dayNumber;
+
+            const now = new Date();
+            const todayDate = now.getDate();
+            const isToday = (dayNumber === todayDate);
+
+            document.getElementById('detailTitle').innerHTML = `<i class="fa-solid fa-chart-line" style="color: var(--primary);"></i> รายงานสถิติย้อนหลังรายชั่วโมง: ${currentSelectedTitle} ประจำวันที่ ${dayNumber} ${currentMonthName}`;
+
+            const container = document.getElementById('dynamicChartsContainer');
+            container.innerHTML = "";
+
+            const targetConfigs = dataTemplates[currentSelectedType];
+            if (!targetConfigs) return;
+
+            const chartFontConfig = { family: "'Chakrapetch', 'Inter', sans-serif", size: 11, weight: '600' };
+
+            targetConfigs.forEach(config => {
+                const chartWrapper = document.createElement('div');
+                chartWrapper.className = "multi-chart-wrapper";
+                
+                const titleDiv = document.createElement('div');
+                titleDiv.className = "chart-sub-title";
+                titleDiv.innerHTML = `<i class="fa-solid fa-square-poll-vertical" style="color:${config.color}"></i> กราฟข้อมูลความเคลื่อนไหว ${config.label}`;
+                
+                const innerContainer = document.createElement('div');
+                innerContainer.className = "chart-container";
+                
+                const canvas = document.createElement('canvas');
+                canvas.id = `canvas_${config.key}`;
+
+                innerContainer.appendChild(canvas);
+                chartWrapper.appendChild(titleDiv);
+                chartWrapper.appendChild(innerContainer);
+                container.appendChild(chartWrapper);
+
+                const processedDataPoints = generateFilteredData(config.min, config.max, config.base, isToday, config.isBinary || false);
+                liveRuntimeStorage[config.key] = processedDataPoints;
+
+                const ctx = canvas.getContext('2d');
+                const isORPressure = (config.key === 'or_pressure');
+
+                initializedCharts[config.key] = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: baseHoursLabel,
+                        datasets: [{
+                            data: processedDataPoints,
+                            borderColor: config.color,
+                            backgroundColor: hexToRgbA(config.color, 0.06),
+                            borderWidth: 2.5,
+                            tension: isORPressure ? 0 : 0.25, 
+                            stepped: isORPressure ? true : false,
+                            fill: true,
+                            pointRadius: function(context) {
+                                return context.dataset.data[context.dataIndex] === null ? 0 : 3;
+                            },
+                            pointBackgroundColor: '#ffffff',
+                            spanGaps: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: '#1e293b' }, ticks: { color: '#ffffff', font: chartFontConfig } },
+                            y: { 
+                                grid: { color: '#1e293b' }, 
+                                ticks: { 
+                                    color: '#ffffff', 
+                                    font: chartFontConfig,
+                                    stepSize: isORPressure ? 1 : undefined,
+                                    callback: function(value) {
+                                        if (isORPressure) {
+                                            if (value === 1) return 'Positive (1)';
+                                            if (value === 0) return 'Negative (0)';
+                                            return '';
+                                        }
+                                        return value;
+                                    }
+                                },
+                                min: config.min,
+                                max: config.max
+                            }
+                        }
+                    }
+                });
+            });
+
+            document.getElementById('detailSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hexToRgbA(hex, alpha){
+            let c;
+            if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+                c= hex.substring(1).split('');
+                if(c.length== 3){
+                    c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+                }
+                c= '0x'+c.join('');
+                return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
+            }
+            return 'rgba(14, 165, 233, 0.1)';
+        }
+    </script>
+</body>
+</html>
