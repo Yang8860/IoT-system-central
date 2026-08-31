@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HMS - Central Monitoring System</title>
+    <title>Medical Dashboard Monitor</title>
     <link href="https://fonts.googleapis.com/css2?family=Chakrapetch:wght=400;600;700&family=Inter:wght=300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -31,22 +31,22 @@
         }
 
         [data-theme="light"] {
-            --bg-color: #f8fafc;
+            --bg-color: #f0f9ff;
             --card-bg: #ffffff;
-            --card-hover: #f1f5f9;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #e2e8f0;
-            --inner-bg: #f1f5f9;
-            --inner-border: #cbd5e1;
+            --card-hover: #e0f2fe;
+            --text-main: #076fa7;
+            --text-muted: #0284c7;
+            --border-color: #05a8ff;
+            --inner-bg: #f8fafc;
+            --inner-border: #7dd3fc;
             --btn-disabled-bg: #e2e8f0;
             --btn-disabled-color: #94a3b8;
             --primary: #0284c7;
-            --success: #16a34a;
-            --warning: #d97706;
-            --orange: #ea580c;
-            --danger: #dc2626;
-            --chart-grid: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --orange: #f97316;
+            --danger: #ef4444;
+            --chart-grid: #e0f2fe;
         }
 
         * {
@@ -151,7 +151,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
         }
 
-        /* --- แอนิเมชันกระพริบแดงช้าๆ --- */
         @keyframes slowRedPulse {
             0% {
                 border-color: rgba(248, 113, 113, 0.4);
@@ -171,7 +170,6 @@
             animation: slowRedPulse 2.5s infinite ease-in-out !important;
         }
 
-        /* --- ตกแต่งการ์ดปิดปรับปรุง --- */
         .card-disabled-maintenance {
             border: 1px solid var(--danger) !important;
             opacity: 0.85;
@@ -395,7 +393,7 @@
         .date-btn.active {
             background: var(--primary);
             border-color: var(--primary);
-            color: #0b0f19;
+            color: #ffffff;
             font-weight: 700;
             box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
         }
@@ -516,7 +514,7 @@
 <body>
 
     <header>
-        <h1><i class="fa-solid fa-heart-pulse"></i> Monitor Dashboard โรงพยาบาลเชียงรายประชานุเคราะห์ </h1>
+        <h1><i class="fa-solid fa-heart-pulse"></i> Monitor Dashboard โรงพยาบาลเชียงรายประชานุเคราะห์ By CEO.Yang </h1>
 
         <div class="header-meta">
             <button class="theme-toggle-btn" id="themeToggleBtn">
@@ -526,7 +524,7 @@
                 <div class="pulse-dot"></div> ระบบกำลังทำงาน REAL-TIME
             </div>
             <div class="datetime-display" id="clockDisplay">
-                <i class="fa-regular fa-clock"></i> กําลังโหลดเวลา...
+                <i class="fa-regular fa-clock"></i> กำลังโหลดเวลา...
             </div>
         </div>
     </header>
@@ -537,9 +535,9 @@
             <div>
                 <div class="card-header">
                     <span>ระบบสำรองก๊าซออกซิเจน</span>
-                    <span class="icon-o2">O₂</span>
+                    <span style="color: #10b981;"><h2>O₂</h2></span>
                 </div>
-                <div class="card-value" id="val-o2-status-text">กําลังโหลดสถานะ...</div>
+                <div class="card-value" id="val-o2-status-text">กำลังโหลดสถานะ...</div>
                 
                 <div class="card-sub-value-row" style="margin-top: 12px;">
                     <span>แรงดันฝั่งซ้าย: <span id="val-o2-left">0</span> <span class="card-unit">PSI</span></span>
@@ -557,9 +555,9 @@
             <div>
                 <div class="card-header">
                     <span>แรงดันต้นทาง Oxygen</span>
-                    <i class="fa-solid fa-database" style="color: #38bdf8;"></i>
+                    <span style="color: #10b981;"><h2>O₂⭡</h2></span>
                 </div>
-                <div class="card-value"><span id="val-o2-source">กําลังโหลดสถานะ...</span> <span class="card-unit">PSI</span></div>
+                <div class="card-value"><span id="val-o2-source">กำลังโหลดสถานะ...</span> <span class="card-unit">PSI</span></div>
                 <div class="card-sub-value-row">
                     <span>เกณฑ์ควบคุม: 50 - 65 PSI</span>
                 </div>
@@ -573,9 +571,9 @@
             <div>
                 <div class="card-header">
                     <span>แรงดันปลายทาง Oxygen</span>
-                    <i class="fa-solid fa-database" style="color: #38bdf8;"></i>
+                    <span style="color: #10b981;"><h2>O₂⭣</h2></span>
                 </div>
-                <div class="card-value"><span id="val-o2-destination">กําลังโหลดสถานะ...</span> <span class="card-unit">PSI</span></div>
+                <div class="card-value"><span id="val-o2-destination">กำลังโหลดสถานะ...</span> <span class="card-unit">PSI</span></div>
                 <div class="card-sub-value-row">
                     <span>เกณฑ์ควบคุม: 50 - 65 PSI</span>
                 </div>
@@ -589,7 +587,7 @@
             <div>
                 <div class="card-header">
                     <span>ระบบไนตรัสออกไซด์ (N₂O) (ปิดปรับปรุง)</span>
-                    <i class="fa-solid fa-cloud" style="color: #a855f7;"></i>
+                    <span style="color: #3b82f6;"><h2>N₂O</h2></span>
                 </div>
                 <div class="card-value"><span id="val-nitrous">0.0</span><span class="card-unit">psi</span></div>
                 <div class="card-sub-value-row" style="height: 21px;">&nbsp;</div> 
@@ -603,36 +601,127 @@
             <div>
                 <div class="card-header">
                     <span>ระบบสูญญากาศ (Vacuum)</span>
-                    <i class="fa-solid fa-wind" style="color: #38bdf8;"></i>
+                    <span style="color: #fefeff;"><h2>kPa-</h2></span>
                 </div>
                 <div class="card-value" style="font-size: 16px; font-weight: 600; line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
                     <div id="val-vacuum-p1">กำลังโหลดข้อมูลปั๊ม 1...</div>
                     <div id="val-vacuum-p2">กำลังโหลดข้อมูลปั๊ม 2...</div>
                 </div>
                 <div class="card-sub-value-row">
-                    <span id="val-vacuum-text">อากคารเฉลิมพระเกียรติ</span>
+                    <span id="val-vacuum-text">อาคารเฉลิมพระเกียรติ</span>
                 </div>
             </div>
             <div class="status-widget-container" id="status-vacuum-container"></div>
         </div>
 
-        <div class="card" id="card-air" onclick="showDetails('air', 'คุณภาพอากาศภายในอาคาร')">
+        <div class="card" id="card-vacuum_2" onclick="showDetails('vacuum_2', 'สรุปจำนวนรอบทำงานระบบสูญญากาศ  (Vacuum)')">
             <div>
                 <div class="card-header">
-                    <span>คุณภาพอากาศภายในอาคาร</span>
-                    <i class="fa-solid fa-wind" style="color: #10b981;"></i>
+                    <span>ระบบสูญญากาศ (Vacuum)</span>
+                    <span style="color: #fefeff;"><h2>kPa-</h2></span>
+                </div>
+                <div class="card-value" style="font-size: 16px; font-weight: 600; line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
+                    <div id="val-vacuum2-p1">กำลังโหลดข้อมูลปั๊ม 1...</div>
+                    <div id="val-vacuum2-p2">กำลังโหลดข้อมูลปั๊ม 2...</div>
+                </div>
+                <div class="card-sub-value-row">
+                    <span id="val-vacuum2-text">อาคารอุบัติเหตุฉุกเฉิน</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-vacuum2-container"></div>
+        </div>
+
+        <div class="card" id="card-air_compressor" onclick="showDetails('air_compressor', 'สรุปจำนวนรอบทำงานระบบอัดอากาศ (Air Compressor)')">
+            <div>
+                <div class="card-header">
+                    <span>ระบบอัดอากาศ (Air Compressor)</span>
+                    <span style="color: #ffe344;"><h2>kPa+</h2></span>
+                </div>
+                <div class="card-value" style="font-size: 16px; font-weight: 600; line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
+                    <div id="val-aircomp-p1">กำลังโหลดข้อมูลปั๊ม 1...</div>
+                    <div id="val-aircomp-p2">กำลังโหลดข้อมูลปั๊ม 2...</div>
+                </div>
+                <div class="card-sub-value-row">
+                    <span id="val-aircomp-text">อาคารอุบัติเหตุฉุกเฉิน</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-aircomp-container"></div>
+        </div>
+
+        <div class="card" id="card-air1" onclick="showDetails('air1', 'คุณภาพอากาศภายในอาคาร (ชั้น 1)')">
+            <div>
+                <div class="card-header">
+                    <span>คุณภาพอากาศภายในอาคาร (OPDชั้น1)</span>
+                    <i class="fa-solid fa-wind" style="color: #ff4bc6;"></i>
                 </div>
                 <div class="card-value" style="font-size: 18px; line-height: 1.4;">
-                    <span id="val-air">--</span><span class="card-unit" style="font-size:11px;">µg/m³</span> | 
-                    <span id="val-co2">--</span><span class="card-unit" style="font-size:11px;">ppm</span> | 
-                    <span id="val-temp">--</span><span class="card-unit" style="font-size:11px;">°C</span> | 
-                    <span id="val-rh">--</span><span class="card-unit" style="font-size:11px;">%</span>
+                    <span id="val-air1">--</span><span class="card-unit" style="font-size:11px;">µg/m³</span> | 
+                    <span id="val-co21">--</span><span class="card-unit" style="font-size:11px;">ppm</span> | 
+                    <span id="val-temp1">--</span><span class="card-unit" style="font-size:11px;">°C</span> | 
+                    <span id="val-rh1">--</span><span class="card-unit" style="font-size:11px;">%</span>
                 </div>
                 <div class="card-sub-value-row" style="font-size:12px; margin-bottom: 6px;">
                     <span>PM2.5 / CO₂ / Temp / RH</span>
                 </div>
             </div>
-            <div class="status-widget-container" id="status-air-container"></div>
+            <div class="status-widget-container" id="status-air1-container"></div>
+        </div>
+
+        <div class="card" id="card-air2" onclick="showDetails('air2', 'คุณภาพอากาศภายในอาคาร (ชั้น 2)')">
+            <div>
+                <div class="card-header">
+                    <span>คุณภาพอากาศภายในอาคาร (OPDชั้น2)</span>
+                    <i class="fa-solid fa-wind" style="color: #10b981;"></i>
+                </div>
+                <div class="card-value" style="font-size: 18px; line-height: 1.4;">
+                    <span id="val-air2">--</span><span class="card-unit" style="font-size:11px;">µg/m³</span> | 
+                    <span id="val-co22">--</span><span class="card-unit" style="font-size:11px;">ppm</span> | 
+                    <span id="val-temp2">--</span><span class="card-unit" style="font-size:11px;">°C</span> | 
+                    <span id="val-rh2">--</span><span class="card-unit" style="font-size:11px;">%</span>
+                </div>
+                <div class="card-sub-value-row" style="font-size:12px; margin-bottom: 6px;">
+                    <span>PM2.5 / CO₂ / Temp / RH</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-air2-container"></div>
+        </div>
+
+        <div class="card" id="card-air3" onclick="showDetails('air3', 'คุณภาพอากาศภายในอาคาร (ชั้น 3)')">
+            <div>
+                <div class="card-header">
+                    <span>คุณภาพอากาศภายในอาคาร (OPDชั้น3)</span>
+                    <i class="fa-solid fa-wind" style="color: #ffff15;"></i>
+                </div>
+                <div class="card-value" style="font-size: 18px; line-height: 1.4;">
+                    <span id="val-air3">--</span><span class="card-unit" style="font-size:11px;">µg/m³</span> | 
+                    <span id="val-co23">--</span><span class="card-unit" style="font-size:11px;">ppm</span> | 
+                    <span id="val-temp3">--</span><span class="card-unit" style="font-size:11px;">°C</span> | 
+                    <span id="val-rh3">--</span><span class="card-unit" style="font-size:11px;">%</span>
+                </div>
+                <div class="card-sub-value-row" style="font-size:12px; margin-bottom: 6px;">
+                    <span>PM2.5 / CO₂ / Temp / RH</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-air3-container"></div>
+        </div>
+
+        <div class="card" id="card-air4" onclick="showDetails('air4', 'คุณภาพอากาศภายในอาคาร (ทันตกรรม ชั้น2)')">
+            <div>
+                <div class="card-header">
+                    <span>คุณภาพอากาศภายในอาคาร (ทันตกรรม)</span>
+                    <i class="fa-solid fa-wind" style="color: #06d6ff;"></i>
+                </div>
+                <div class="card-value" style="font-size: 18px; line-height: 1.4;">
+                    <span id="val-air4">--</span><span class="card-unit" style="font-size:11px;">µg/m³</span> | 
+                    <span id="val-co24">--</span><span class="card-unit" style="font-size:11px;">ppm</span> | 
+                    <span id="val-temp4">--</span><span class="card-unit" style="font-size:11px;">°C</span> | 
+                    <span id="val-rh4">--</span><span class="card-unit" style="font-size:11px;">%</span>
+                </div>
+                <div class="card-sub-value-row" style="font-size:12px; margin-bottom: 6px;">
+                    <span>PM2.5 / CO₂ / Temp / RH</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-air4-container"></div>
         </div>
 
         <div class="card card-disabled-maintenance" id="card-or_room" onclick="showDetails('or_room', 'ระบบควบคุมห้องผ่าตัด OR')">
@@ -653,7 +742,25 @@
             </div>
         </div>
 
-        <div class="card card-disabled-maintenance" id="card-water" onclick="showDetails('water', 'ระบบน้ำทางการแพทย์')">
+        <div class="card" id="card-water_flow" onclick="showDetails('water_flow', 'สรุปสถิติอัตราการไหลของน้ำ')">
+            <div>
+                <div class="card-header">
+                    <span>อัตราการไหลของน้ำ</span>
+                    <i class="fa-solid fa-faucet-drip" style="color: #0284c7;"></i>
+                </div>
+                <div class="card-value">
+                    <span id="val-water-flow-rate">0.0</span> <span class="card-unit">m³</span>
+                </div>
+                <div class="card-sub-value-row">
+                    <span>ระบบน้ำบ่อบำบัดน้ำเสีย</span>
+                </div>
+            </div>
+            <div class="status-widget-container" id="status-water-flow-container">
+                <span class="card-status status-info"><i class="fa-solid fa-circle-info"></i> รอเชื่อมต่อ Firebase</span>
+            </div>
+        </div>
+
+        <div class="card card-disabled-maintenance" id="card-water" onclick="showDetails('water', 'ระบบบำบัดน้ำเสีย')">
             <div>
                 <div class="card-header">
                     <span>คุณภาพน้ำบ่อบำบัดน้ำเสีย (ปิดปรับปรุง)</span>
@@ -682,14 +789,14 @@
                     <i class="fa-solid fa-network-wired" style="color: var(--warning);"></i>
                 </div>
                 <div class="card-value" style="font-size: 20px; line-height: 1.4;">
-                    ลิงก์ระบบภายนอก
+                    ลิงก์ระบบภายนอกกรณีฉุกเฉิน
                 </div>
                 <div class="card-sub-value-row" style="margin-top: 6px;">
                     <span>รวมปุ่มทางลัดไปหน้าเว็บอื่น</span>
                 </div>
             </div>
             <div class="status-widget-container">
-                <span class="card-status status-warning"><i class="fa-solid fa-link"></i> มี 5 ลิงก์พร้อมใช้งาน</span>
+                <span class="card-status status-warning"><i class="fa-solid fa-link"></i> มี 10 ลิงก์พร้อมใช้งาน</span>
             </div>
         </div>
 
@@ -711,10 +818,31 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-        // ==========================================
-        // Firebase คุณภาพอากาศ (air-quality-725ca)
-        // ==========================================
-        const firebaseConfigAir = {
+        function listenAirQuality(dbRef, floor) {
+            onValue(dbRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const pm25Val = data.pm25 !== undefined ? parseFloat(data.pm25) : 0;
+                    const co2Val = data.co2 !== undefined ? parseFloat(data.co2) : 0;
+                    const tempVal = data.temperature !== undefined ? parseFloat(data.temperature) : 0;
+                    const rhVal = data.humidity !== undefined ? parseFloat(data.humidity) : 0;
+
+                    const airPmNode = document.getElementById(`val-air${floor}`);
+                    const airCo2Node = document.getElementById(`val-co2${floor}`);
+                    const airTempNode = document.getElementById(`val-temp${floor}`);
+                    const airRhNode = document.getElementById(`val-rh${floor}`);
+
+                    if (airPmNode) airPmNode.innerText = Math.round(pm25Val);
+                    if (airCo2Node) airCo2Node.innerText = Math.round(co2Val);
+                    if (airTempNode) airTempNode.innerText = tempVal.toFixed(1);
+                    if (airRhNode) airRhNode.innerText = rhVal.toFixed(1);
+
+                    updateAirUI(floor, pm25Val, co2Val, tempVal, rhVal);
+                }
+            });
+        }
+
+        const firebaseConfigAir1 = {
             apiKey: "AIzaSyBfPpj3DrWTfQm6E6PtD3OtEKZDbeCsH-M",
             authDomain: "air-quality-725ca.firebaseapp.com",
             databaseURL: "https://air-quality-725ca-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -724,37 +852,52 @@
             appId: "1:178960255123:web:b6ebfbc0fa311383186566",
             measurementId: "G-6PJWCY3M3Y"
         };
+        const appAir1 = initializeApp(firebaseConfigAir1, "appAir1");
+        const dbAir1 = getDatabase(appAir1);
+        listenAirQuality(ref(dbAir1, 'Environment/Current'), 1);
 
-        const appAir = initializeApp(firebaseConfigAir, "appAir");
-        const dbAir = getDatabase(appAir);
-        // แก้ไข Path ให้อ่านจาก Environment/Current ให้ตรงกับใน Database
-        const dataRefAir = ref(dbAir, 'Environment/Current');
+        const firebaseConfigAir2 = {
+            apiKey: "AIzaSyAOlaU7MgjJjlBCYpu1KZdP_tGyRHHjphs",
+            authDomain: "air-quality-2-a91ae.firebaseapp.com",
+            databaseURL: "https://air-quality-2-a91ae-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "air-quality-2-a91ae",
+            storageBucket: "air-quality-2-a91ae.firebasestorage.app",
+            messagingSenderId: "657390386092",
+            appId: "1:657390386092:web:a9439b8b84a9855eedd809",
+            measurementId: "G-WG1X6PBPQS"
+        };
+        const appAir2 = initializeApp(firebaseConfigAir2, "appAir2");
+        const dbAir2 = getDatabase(appAir2);
+        listenAirQuality(ref(dbAir2, 'Environment/Current'), 2);
 
-        onValue(dataRefAir, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                const airPmNode = document.getElementById('val-air');
-                const airCo2Node = document.getElementById('val-co2');
-                const airTempNode = document.getElementById('val-temp');
-                const airRhNode = document.getElementById('val-rh');
+        const firebaseConfigAir3 = {
+            apiKey: "AIzaSyAomcvNcPAJv0S1_a7EnuzIfAgz5SJQfRE",
+            authDomain: "air-quality-3.firebaseapp.com",
+            databaseURL: "https://air-quality-3-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "air-quality-3",
+            storageBucket: "air-quality-3.firebasestorage.app",
+            messagingSenderId: "138568673164",
+            appId: "1:138568673164:web:3b1e7675fff99129d5d8a9",
+            measurementId: "G-KEYHHLWX32"
+        };
+        const appAir3 = initializeApp(firebaseConfigAir3, "appAir3");
+        const dbAir3 = getDatabase(appAir3);
+        listenAirQuality(ref(dbAir3, 'Environment/Current'), 3);
 
-                const pm25Val = data.pm25 !== undefined ? parseFloat(data.pm25) : 0;
-                const co2Val = data.co2 !== undefined ? parseFloat(data.co2) : 0;
-                const tempVal = data.temperature !== undefined ? parseFloat(data.temperature) : 0;
-                const rhVal = data.humidity !== undefined ? parseFloat(data.humidity) : 0;
+        const firebaseConfigAir4 = {
+            apiKey: "AIzaSyDOOY6wItzrFcQIZ6EuueD_ta7w5IRmuVU",
+            authDomain: "air-quality-dt.firebaseapp.com",
+            databaseURL: "https://air-quality-dt-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "air-quality-dt",
+            storageBucket: "air-quality-dt.firebasestorage.app",
+            messagingSenderId: "187480909170",
+            appId: "1:187480909170:web:7f50988c9de4975bd329eb",
+            measurementId: "G-S4QXG74T6F"
+        };
+        const appAir4 = initializeApp(firebaseConfigAir4, "appAir4");
+        const dbAir4 = getDatabase(appAir4);
+        listenAirQuality(ref(dbAir4, 'Environment/Current'), 4);
 
-                if (airPmNode) airPmNode.innerText = Math.round(pm25Val);
-                if (airCo2Node) airCo2Node.innerText = Math.round(co2Val);
-                if (airTempNode) airTempNode.innerText = tempVal.toFixed(1);
-                if (airRhNode) airRhNode.innerText = rhVal.toFixed(1);
-
-                updateAirUI(pm25Val, co2Val, tempVal, rhVal);
-            }
-        });
-
-        // ==========================================
-        // Firebase ออกซิเจน (oxegen-monitor)
-        // ==========================================
         const firebaseConfigO2 = {
             apiKey: "AIzaSyCXKDEy7yerpQCXCocflg9LWjx5dOpCqWw",
             authDomain: "oxegen-monitor.firebaseapp.com",
@@ -765,7 +908,6 @@
             appId: "1:1073586521044:web:f2a42d7d7468cb3ea3cc41",
             measurementId: "G-DQXCBDPWN9"
         };
-
         const appO2 = initializeApp(firebaseConfigO2, "appO2");
         const dbO2 = getDatabase(appO2);
         const dataRefO2 = ref(dbO2, 'data');
@@ -852,35 +994,45 @@
                         }
                     }
                 }
-
-                const now = new Date();
-                const todayDate = now.getDate();
-                const currentHour = now.getHours();
-
-                if (window.masterDatabaseStore && window.masterDatabaseStore[todayDate]) {
-                    if (liveLin !== null) window.masterDatabaseStore[todayDate]['o2_total'][currentHour] = parseFloat(liveLin.toFixed(1));
-                    if (liveLeft !== null) window.masterDatabaseStore[todayDate]['o2_left'][currentHour] = Math.round(liveLeft);
-                    if (liveRight !== null) window.masterDatabaseStore[todayDate]['o2_right'][currentHour] = Math.round(liveRight);
-                    
-                    if (window.activeDaySelected === todayDate && window.currentSelectedType === 'oxygen') {
-                        if (window.initializedCharts) {
-                            if (window.initializedCharts['o2_left']) {
-                                window.initializedCharts['o2_left'].data.datasets[0].data = window.masterDatabaseStore[todayDate]['o2_left'];
-                                window.initializedCharts['o2_left'].update('none');
-                            }
-                            if (window.initializedCharts['o2_right']) {
-                                window.initializedCharts['o2_right'].data.datasets[0].data = window.masterDatabaseStore[todayDate]['o2_right'];
-                                window.initializedCharts['o2_right'].update('none');
-                            }
-                        }
-                    }
-                }
             }
         });
 
-        // ==========================================
-        // Firebase ออกซิเจนต้นทาง (nitrous1-b4ad5)
-        // ==========================================
+        window.fetchO2HistoryData = function(dateFormatted, callback) {
+            const historyRef = ref(dbO2, `daily_history/${dateFormatted}`);
+            onValue(historyRef, (snapshot) => {
+                const data = snapshot.val();
+                let leftArray = new Array(24).fill(null);
+                let rightArray = new Array(24).fill(null);
+
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+                const currentDate = String(now.getDate()).padStart(2, '0');
+                const todayStr = `${currentYear}-${currentMonth}-${currentDate}`;
+                const currentHour = now.getHours();
+
+                const isToday = (dateFormatted === todayStr);
+
+                for (let h = 0; h < 24; h++) {
+                    if (isToday && h > currentHour) {
+                        leftArray[h] = null;
+                        rightArray[h] = null;
+                        continue;
+                    }
+
+                    let hourKey = String(h).padStart(2, '0') + '_00';
+                    if (data && data[hourKey]) {
+                        leftArray[h] = data[hourKey].left !== undefined ? parseFloat(parseFloat(data[hourKey].left).toFixed(1)) : 0.0;
+                        rightArray[h] = data[hourKey].right !== undefined ? parseFloat(parseFloat(data[hourKey].right).toFixed(1)) : 0.0;
+                    } else {
+                        leftArray[h] = 0.0;
+                        rightArray[h] = 0.0;
+                    }
+                }
+                callback({ leftArray, rightArray });
+            }, { onlyOnce: true });
+        };
+
         const firebaseConfigFileSource = {
             apiKey: "AIzaSyDBjXBCQYUW0wzpjIB-leNS0gr-DlVcvdg",
             authDomain: "nitrous1-b4ad5.firebaseapp.com",
@@ -891,7 +1043,6 @@
             appId: "1:268190423733:web:e2f3369b50e4d088c53cfc",
             measurementId: "G-T8N189C0XP"
         };
-
         const appSource = initializeApp(firebaseConfigFileSource, "appSource");
         const dbSource = getDatabase(appSource);
         const dataRefSource = ref(dbSource, 'data');
@@ -931,27 +1082,41 @@
                         o2SourceContainer.innerHTML = `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> ต้นทางปกติ</span>`;
                     }
                 }
-
-                const now = new Date();
-                const todayDate = now.getDate();
-                const currentHour = now.getHours();
-
-                if (window.masterDatabaseStore && window.masterDatabaseStore[todayDate]) {
-                    window.masterDatabaseStore[todayDate]['o2_source'][currentHour] = parseFloat(livePressure.toFixed(1));
-                    
-                    if (window.activeDaySelected === todayDate && window.currentSelectedType === 'oxygen_source') {
-                        if (window.initializedCharts && window.initializedCharts['o2_source']) {
-                            window.initializedCharts['o2_source'].data.datasets[0].data = window.masterDatabaseStore[todayDate]['o2_source'];
-                            window.initializedCharts['o2_source'].update('none');
-                        }
-                    }
-                }
             }
         });
 
-        // ==========================================
-        // Firebase แรงดันออกซิเจนปลายทาง (distal-oxygen)
-        // ==========================================
+        window.fetchSourceHistoryData = function(dateFormatted, callback) {
+            const historyRef = ref(dbSource, `daily_history/${dateFormatted}`);
+            onValue(historyRef, (snapshot) => {
+                const data = snapshot.val();
+                let hoursArray = new Array(24).fill(null);
+
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+                const currentDate = String(now.getDate()).padStart(2, '0');
+                const todayStr = `${currentYear}-${currentMonth}-${currentDate}`;
+                const currentHour = now.getHours();
+
+                const isToday = (dateFormatted === todayStr);
+
+                for (let h = 0; h < 24; h++) {
+                    if (isToday && h > currentHour) {
+                        hoursArray[h] = null;
+                        continue;
+                    }
+
+                    let hourKey = String(h).padStart(2, '0') + '_00';
+                    if (data && data[hourKey] && data[hourKey].pressure !== undefined) {
+                        hoursArray[h] = parseFloat(parseFloat(data[hourKey].pressure).toFixed(1));
+                    } else {
+                        hoursArray[h] = 0.0;
+                    }
+                }
+                callback(hoursArray);
+            }, { onlyOnce: true });
+        };
+
         const firebaseConfigDest = {
             apiKey: "AIzaSyBCh0lFyDulxYP-UPdvO3yGnZTDk-A_A8k",
             authDomain: "distal-oxygen.firebaseapp.com",
@@ -962,11 +1127,10 @@
             appId: "1:359084529164:web:15328f285c12ffbf308029",
             measurementId: "G-7GMZHJJRGT"
         };
-
         const appDest = initializeApp(firebaseConfigDest, "appDest");
         const dbDest = getDatabase(appDest);
+        
         const dataRefDest = ref(dbDest, 'data');
-
         onValue(dataRefDest, (snapshot) => {
             const data = snapshot.val();
             if (data && data.pressure !== undefined) {
@@ -1002,27 +1166,41 @@
                         o2DestContainer.innerHTML = `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> ปลายทางปกติ</span>`;
                     }
                 }
-
-                const now = new Date();
-                const todayDate = now.getDate();
-                const currentHour = now.getHours();
-
-                if (window.masterDatabaseStore && window.masterDatabaseStore[todayDate]) {
-                    window.masterDatabaseStore[todayDate]['o2_destination'][currentHour] = parseFloat(livePressure.toFixed(1));
-                    
-                    if (window.activeDaySelected === todayDate && window.currentSelectedType === 'oxygen_destination') {
-                        if (window.initializedCharts && window.initializedCharts['o2_destination']) {
-                            window.initializedCharts['o2_destination'].data.datasets[0].data = window.masterDatabaseStore[todayDate]['o2_destination'];
-                            window.initializedCharts['o2_destination'].update('none');
-                        }
-                    }
-                }
             }
         });
 
-        // ==========================================
-        // Firebase สุญญากาศ (vacuum-alarm)
-        // ==========================================
+        window.fetchDestHistoryData = function(dateFormatted, callback) {
+            const historyRef = ref(dbDest, `daily_history/${dateFormatted}`);
+            onValue(historyRef, (snapshot) => {
+                const data = snapshot.val();
+                let hoursArray = new Array(24).fill(null);
+
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+                const currentDate = String(now.getDate()).padStart(2, '0');
+                const todayStr = `${currentYear}-${currentMonth}-${currentDate}`;
+                const currentHour = now.getHours();
+
+                const isToday = (dateFormatted === todayStr);
+
+                for (let h = 0; h < 24; h++) {
+                    if (isToday && h > currentHour) {
+                        hoursArray[h] = null;
+                        continue;
+                    }
+
+                    let hourKey = String(h).padStart(2, '0') + '_00';
+                    if (data && data[hourKey] && data[hourKey].pressure !== undefined) {
+                        hoursArray[h] = parseFloat(parseFloat(data[hourKey].pressure).toFixed(1));
+                    } else {
+                        hoursArray[h] = 0.0;
+                    }
+                }
+                callback(hoursArray);
+            }, { onlyOnce: true });
+        };
+
         const firebaseConfigVacuum = {
             apiKey: "AIzaSyCKRywOh7FReQFdCrVnyCqaLHxb6tc3h2Q",
             authDomain: "vacuum-alarm.firebaseapp.com",
@@ -1033,7 +1211,6 @@
             appId: "1:625920548508:web:051fb7f6b293105782d759",
             measurementId: "G-T2LTLB08MF"
         };
-
         const appVacuum = initializeApp(firebaseConfigVacuum, "appVacuum");
         const dbVacuum = getDatabase(appVacuum);
 
@@ -1116,6 +1293,114 @@
             }
         });
 
+        const firebaseConfigVacuum2 = {
+            apiKey: "AIzaSyAmlSqUZDFhW_UWY1Lw84VuMOG2TKnjNjA",
+            authDomain: "vacuum-2.firebaseapp.com",
+            databaseURL: "https://vacuum-2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "vacuum-2",
+            storageBucket: "vacuum-2.firebasestorage.app",
+            messagingSenderId: "863518903805",
+            appId: "1:863518903805:web:a1f074de5450b9e8591d94",
+            measurementId: "G-GRT44XJ221"
+        };
+        const appVacuum2 = initializeApp(firebaseConfigVacuum2, "appVacuum2");
+        const dbVacuum2 = getDatabase(appVacuum2);
+
+        const vacuum2LiveRef = ref(dbVacuum2, 'Vacuum');
+        onValue(vacuum2LiveRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                updateVacuum2LiveUI(data);
+                updateAirCompLiveUI(data);
+            }
+        });
+
+        const vacuum2DailyRef = ref(dbVacuum2, 'Vacuum/daily');
+        onValue(vacuum2DailyRef, (snapshot) => {
+            const dailyData = snapshot.val();
+            if (dailyData && window.masterDatabaseStore) {
+                const now = new Date();
+                const currentMonthNum = now.getMonth() + 1;
+
+                for (let fullDate in dailyData) {
+                    const parts = fullDate.split('-');
+                    if (parts.length === 3) {
+                        const dMonth = parseInt(parts[1], 10);
+                        const dDay = parseInt(parts[2], 10);
+
+                        if (dMonth === currentMonthNum && window.masterDatabaseStore[dDay]) {
+                            const node = dailyData[fullDate];
+
+                            window.masterDatabaseStore[dDay]['vac2_summary'] = {
+                                p1_run: node.p1RunCount !== undefined ? node.p1RunCount : 0,
+                                p1_overload: node.p1OvlCount !== undefined ? node.p1OvlCount : 0,
+                                p2_run: node.p2RunCount !== undefined ? node.p2RunCount : 0,
+                                p2_overload: node.p2OvlCount !== undefined ? node.p2OvlCount : 0
+                            };
+
+                            window.masterDatabaseStore[dDay]['aircomp_summary'] = {
+                                p1_run: node.a1RunCount !== undefined ? node.a1RunCount : 0,
+                                p1_overload: node.a1OvlCount !== undefined ? node.a1OvlCount : 0,
+                                p2_run: node.a2RunCount !== undefined ? node.a2RunCount : 0,
+                                p2_overload: node.a2OvlCount !== undefined ? node.a2OvlCount : 0
+                            };
+
+                            if (window.activeDaySelected === dDay) {
+                                if (window.currentSelectedType === 'vacuum_2') {
+                                    updateCounterDOM(window.masterDatabaseStore[dDay]['vac2_summary']);
+                                } else if (window.currentSelectedType === 'air_compressor') {
+                                    updateCounterDOM(window.masterDatabaseStore[dDay]['aircomp_summary']);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const vacuum2MonthlyRef = ref(dbVacuum2, `Vacuum/monthly/${yearStr}-${monthStr}`);
+        onValue(vacuum2MonthlyRef, (snapshot) => {
+            const monthlyData = snapshot.val();
+            window.monthlyVacuum2Totals = { p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0 };
+            window.monthlyAirCompTotals = { p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0 };
+
+            if (monthlyData) {
+                window.monthlyVacuum2Totals = {
+                    p1_run: monthlyData.p1RunCount !== undefined ? monthlyData.p1RunCount : 0,
+                    p1_overload: monthlyData.p1OvlCount !== undefined ? monthlyData.p1OvlCount : 0,
+                    p2_run: monthlyData.p2RunCount !== undefined ? monthlyData.p2RunCount : 0,
+                    p2_overload: monthlyData.p2OvlCount !== undefined ? monthlyData.p2OvlCount : 0
+                };
+
+                window.monthlyAirCompTotals = {
+                    p1_run: monthlyData.a1RunCount !== undefined ? monthlyData.a1RunCount : 0,
+                    p1_overload: monthlyData.a1OvlCount !== undefined ? monthlyData.a1OvlCount : 0,
+                    p2_run: monthlyData.a2RunCount !== undefined ? monthlyData.a2RunCount : 0,
+                    p2_overload: monthlyData.a2OvlCount !== undefined ? monthlyData.a2OvlCount : 0
+                };
+
+                if (window.activeDaySelected === 'monthly') {
+                    if (window.currentSelectedType === 'vacuum_2') {
+                        updateCounterDOM(window.monthlyVacuum2Totals);
+                    } else if (window.currentSelectedType === 'air_compressor') {
+                        updateCounterDOM(window.monthlyAirCompTotals);
+                    }
+                }
+            }
+        });
+
+        function updateCounterDOM(data) {
+            const p1RunNode = document.getElementById('p1_live_run');
+            const p1OverNode = document.getElementById('p1_live_overload');
+            const p2RunNode = document.getElementById('p2_live_run');
+            const p2OverNode = document.getElementById('p2_live_overload');
+            
+            if(p1RunNode) p1RunNode.innerText = data.p1_run;
+            if(p1OverNode) p1OverNode.innerText = data.p1_overload;
+            if(p2RunNode) p2RunNode.innerText = data.p2_run;
+            if(p2OverNode) p2OverNode.innerText = data.p2_overload;
+        }
+
         function updateVacuumLiveUI(data) {
             const nodeP1 = document.getElementById('val-vacuum-p1');
             const nodeP2 = document.getElementById('val-vacuum-p2');
@@ -1125,7 +1410,7 @@
 
             if (!nodeP1 || !nodeP2) return;
 
-            const isOverload = (data.Pump1_Overload === true || data.Pump2_Overload === true || data.Pump1_Overload === "true" || data.Pump2_Overload === "true");
+            const isOverload = (data.Pump1_Overload === true || data.Pump1_Overload === "true" || data.Pump2_Overload === true || data.Pump2_Overload === "true");
 
             if (cardVacuum) {
                 if (isOverload) {
@@ -1174,95 +1459,229 @@
             }
         }
 
-        window.updateAirUI = function(airVal, co2Val, tempVal, rhVal) {
-            const airPmNode = document.getElementById('val-air');
-            const airCo2Node = document.getElementById('val-co2');
-            const airTempNode = document.getElementById('val-temp');
-            const airRhNode = document.getElementById('val-rh');
-            const airContainer = document.getElementById('status-air-container');
-            const cardAir = document.getElementById('card-air');
+        function updateVacuum2LiveUI(data) {
+            const nodeP1 = document.getElementById('val-vacuum2-p1');
+            const nodeP2 = document.getElementById('val-vacuum2-p2');
+            const vacTextNode = document.getElementById('val-vacuum2-text');
+            const vacContainer = document.getElementById('status-vacuum2-container');
+            const cardVacuum2 = document.getElementById('card-vacuum_2');
 
-            let airColor, airStatusClass, airText;
-            if (airVal > 25) {
+            if (!nodeP1 || !nodeP2) return;
+
+            const isOverload = (data.Pump1_Overload === true || data.Pump1_Overload === "true" || data.Pump2_Overload === true || data.Pump2_Overload === "true");
+
+            if (cardVacuum2) {
+                if (isOverload) {
+                    cardVacuum2.classList.add('card-alert-danger');
+                } else {
+                    cardVacuum2.classList.remove('card-alert-danger');
+                }
+            }
+
+            if (data.Pump1_Overload === true || data.Pump1_Overload === "true") {
+                nodeP1.innerText = "ปั๊มตัวที่ 1 Overload ผิดปกติ";
+                nodeP1.style.color = "var(--danger)";
+            } else if (data.Pump1_Run === true || data.Pump1_Run === "true") {
+                nodeP1.innerText = "ปั๊มตัวที่ 1 กำลังทำงาน";
+                nodeP1.style.color = "var(--success)";
+            } else {
+                nodeP1.innerText = "ปั๊มตัวที่ 1 หยุดทำงาน";
+                nodeP1.style.color = "var(--primary)";
+            }
+
+            if (data.Pump2_Overload === true || data.Pump2_Overload === "true") {
+                nodeP2.innerText = "ปั๊มตัวที่ 2 Overload ผิดปกติ";
+                nodeP2.style.color = "var(--danger)";
+            } else if (data.Pump2_Run === true || data.Pump2_Run === "true") {
+                nodeP2.innerText = "ปั๊มตัวที่ 2 กำลังทำงาน";
+                nodeP2.style.color = "var(--success)";
+            } else {
+                nodeP2.innerText = "ปั๊มตัวที่ 2 หยุดทำงาน";
+                nodeP2.style.color = "var(--primary)";
+            }
+
+            if (isOverload) {
+                vacTextNode.innerHTML = `<strong style="color:var(--danger)"> ตรวจพบสัญญาณ OVERLOAD!</strong>`;
+            } else {
+                vacTextNode.innerText = "อาคารอุบัติเหตุฉุกเฉิน";
+            }
+
+            if (vacContainer) {
+                let p1Html = (data.Pump1_Overload === true || data.Pump1_Overload === "true") ? 
+                    `<span class="card-status status-danger"><i class="fa-solid fa-triangle-exclamation"></i> ปั๊ม 1 Overload</span>` : 
+                    `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> ปั๊ม 1 ทำงานปกติ</span>`;
+                let p2Html = (data.Pump2_Overload === true || data.Pump2_Overload === "true") ? 
+                    `<span class="card-status status-danger"><i class="fa-solid fa-triangle-exclamation"></i> ปั๊ม 2 Overload</span>` : 
+                    `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> ปั๊ม 2 ทำงานปกติ</span>`;
+                vacContainer.innerHTML = p1Html + p2Html;
+            }
+        }
+
+        function updateAirCompLiveUI(data) {
+            const nodeP1 = document.getElementById('val-aircomp-p1');
+            const nodeP2 = document.getElementById('val-aircomp-p2');
+            const airTextNode = document.getElementById('val-aircomp-text');
+            const airContainer = document.getElementById('status-aircomp-container');
+            const cardAirComp = document.getElementById('card-air_compressor');
+
+            if (!nodeP1 || !nodeP2) return;
+
+            const isOverload = (data.Air1_Overload === true || data.Air1_Overload === "true" || data.Air2_Overload === true || data.Air2_Overload === "true");
+
+            if (cardAirComp) {
+                if (isOverload) {
+                    cardAirComp.classList.add('card-alert-danger');
+                } else {
+                    cardAirComp.classList.remove('card-alert-danger');
+                }
+            }
+
+            if (data.Air1_Overload === true || data.Air1_Overload === "true") {
+                nodeP1.innerText = "ปั๊มตัวที่ 1 Overload ผิดปกติ";
+                nodeP1.style.color = "var(--danger)";
+            } else if (data.Air1_Run === true || data.Air1_Run === "true") {
+                nodeP1.innerText = "ปั๊มตัวที่ 1 กำลังทำงาน";
+                nodeP1.style.color = "var(--success)";
+            } else {
+                nodeP1.innerText = "ปั๊มตัวที่ 1 หยุดทำงาน";
+                nodeP1.style.color = "var(--primary)";
+            }
+
+            if (data.Air2_Overload === true || data.Air2_Overload === "true") {
+                nodeP2.innerText = "ปั๊มตัวที่ 2 Overload ผิดปกติ";
+                nodeP2.style.color = "var(--danger)";
+            } else if (data.Air2_Run === true || data.Air2_Run === "true") {
+                nodeP2.innerText = "ปั๊มตัวที่ 2 กำลังทำงาน";
+                nodeP2.style.color = "var(--success)";
+            } else {
+                nodeP2.innerText = "ปั๊มตัวที่ 2 หยุดทำงาน";
+                nodeP2.style.color = "var(--primary)";
+            }
+
+            if (isOverload) {
+                airTextNode.innerHTML = `<strong style="color:var(--danger)"> ตรวจพบสัญญาณ OVERLOAD!</strong>`;
+            } else {
+                airTextNode.innerText = "อาคารอุบัติเหตุฉุกเฉิน";
+            }
+
+            if (airContainer) {
+                let p1Html = (data.Air1_Overload === true || data.Air1_Overload === "true") ? 
+                    `<span class="card-status status-danger"><i class="fa-solid fa-triangle-exclamation"></i> ปั๊ม 1 Overload</span>` : 
+                    `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> ปั๊ม 1 ทำงานปกติ</span>`;
+                let p2Html = (data.Air2_Overload === true || data.Air2_Overload === "true") ? 
+                    `<span class="card-status status-danger"><i class="fa-solid fa-triangle-exclamation"></i> ปั๊ม 2 Overload</span>` : 
+                    `<span class="card-status status-normal"><i class="fa-solid fa-circle-check"></i> ปั๊ม 2 ทำงานปกติ</span>`;
+                airContainer.innerHTML = p1Html + p2Html;
+            }
+        }
+
+        window.updateAirUI = function(floor, airVal, co2Val, tempVal, rhVal) {
+            const airPmNode = document.getElementById(`val-air${floor}`);
+            const airCo2Node = document.getElementById(`val-co2${floor}`);
+            const airTempNode = document.getElementById(`val-temp${floor}`);
+            const airRhNode = document.getElementById(`val-rh${floor}`);
+            const airContainer = document.getElementById(`status-air${floor}-container`);
+            const cardAir = document.getElementById(`card-air${floor}`);
+
+            let airColor, airBadgeClass, airText;
+            if (airVal >= 37.6) {
                 airColor = "var(--danger)";
-                airStatusClass = "status-danger";
-                airText = "PM2.5 แย่สุด";
-            } else if (airVal >= 20) {
+                airBadgeClass = "status-danger";
+                airText = "PM2.5 แย่ที่สุด";
+            } else if (airVal >= 25.1) {
                 airColor = "var(--orange)";
-                airStatusClass = "status-orange";
+                airBadgeClass = "status-orange";
                 airText = "PM2.5 เริ่มแย่";
-            } else if (airVal >= 15) {
-                airColor = "var(--success)";
-                airStatusClass = "status-warning";
+            } else if (airVal >= 15.1) {
+                airColor = "var(--warning)";
+                airBadgeClass = "status-warning";
                 airText = "PM2.5 ปานกลาง";
+            } else if (airVal >= 5.1) {
+                airColor = "var(--success)";
+                airBadgeClass = "status-normal";
+                airText = "PM2.5 ดี";
             } else {
                 airColor = "#38bdf8";
-                airStatusClass = "status-normal";
-                airText = "PM2.5 ปกติ";
+                airBadgeClass = "status-normal";
+                airText = "PM2.5 ดีเยี่ยม";
             }
             if(airPmNode) airPmNode.style.color = airColor;
 
-            let co2Color, co2StatusClass, co2Text;
-            if (co2Val > 1000) {
+            let co2Color, co2BadgeClass, co2Text;
+            if (co2Val >= 1201) {
                 co2Color = "var(--danger)";
-                co2StatusClass = "status-danger";
-                co2Text = "CO₂ แย่สุด";
-            } else if (co2Val > 800) {
+                co2BadgeClass = "status-danger";
+                co2Text = "CO₂ แย่ที่สุด";
+            } else if (co2Val >= 1001) {
                 co2Color = "var(--orange)";
-                co2StatusClass = "status-orange";
+                co2BadgeClass = "status-orange";
                 co2Text = "CO₂ เริ่มแย่";
-            } else if (co2Val > 600) {
+            } else if (co2Val >= 751) {
                 co2Color = "var(--warning)";
-                co2StatusClass = "status-warning";
+                co2BadgeClass = "status-warning";
                 co2Text = "CO₂ ปานกลาง";
-            } else {
+            } else if (co2Val >= 551) {
                 co2Color = "var(--success)";
-                co2StatusClass = "status-normal";
-                co2Text = "CO₂ ปกติ";
+                co2BadgeClass = "status-normal";
+                co2Text = "CO₂ ดี";
+            } else {
+                co2Color = "#38bdf8";
+                co2BadgeClass = "status-normal";
+                co2Text = "CO₂ ดีเยี่ยม";
             }
             if(airCo2Node) airCo2Node.style.color = co2Color;
 
-            let tempColor, tempStatusClass, tempText;
-            if (tempVal > 31.0) {
+            let tempColor, tempBadgeClass, tempText;
+            if (tempVal < 20.0 || tempVal >= 30.1) {
                 tempColor = "var(--danger)";
-                tempStatusClass = "status-danger";
-                tempText = "อุณหภูมิ แย่สุด";
-            } else if (tempVal >= 29.0) {
-                tempColor = "var(--warning)";
-                tempStatusClass = "status-orange";
+                tempBadgeClass = "status-danger";
+                tempText = "อุณหภูมิ แย่ที่สุด";
+            } else if ((tempVal >= 20.0 && tempVal <= 21.9) || (tempVal >= 27.1 && tempVal <= 30.0)) {
+                tempColor = "var(--orange)";
+                tempBadgeClass = "status-orange";
                 tempText = "อุณหภูมิ เริ่มแย่";
-            } else if (tempVal >= 27.0) {
-                tempColor = "var(--success)";
-                tempStatusClass = "status-warning";
+            } else if ((tempVal >= 22.0 && tempVal <= 22.9) || (tempVal >= 26.1 && tempVal <= 27.0)) {
+                tempColor = "var(--warning)";
+                tempBadgeClass = "status-warning";
                 tempText = "อุณหภูมิ ปานกลาง";
+            } else if (tempVal >= 25.1 && tempVal <= 26.0) {
+                tempColor = "var(--success)";
+                tempBadgeClass = "status-normal";
+                tempText = "อุณหภูมิ ดี";
             } else {
                 tempColor = "#38bdf8";
-                tempStatusClass = "status-normal";
-                tempText = "อุณหภูมิ ปกติ";
+                tempBadgeClass = "status-normal";
+                tempText = "อุณหภูมิ ดีเยี่ยม";
             }
             if(airTempNode) airTempNode.style.color = tempColor;
 
-            let rhColor, isRhNormal;
-            if (rhVal > 70.0) {
+            let rhColor, rhBadgeClass, rhText;
+            if (rhVal < 30 || rhVal >= 71) {
                 rhColor = "var(--danger)";
-                isRhNormal = false;
-            } else if (rhVal >= 60.0) {
-                rhColor = "var(--warning)";
-                isRhNormal = true;
-            } else if (rhVal >= 40.0) {
-                rhColor = "var(--success)";
-                isRhNormal = true;
-            } else {
+                rhBadgeClass = "status-danger";
+                rhText = "RH แย่ที่สุด";
+            } else if ((rhVal >= 30 && rhVal <= 34) || (rhVal >= 66 && rhVal <= 70)) {
                 rhColor = "var(--orange)";
-                isRhNormal = false;
+                rhBadgeClass = "status-orange";
+                rhText = "RH เริ่มแย่";
+            } else if ((rhVal >= 35 && rhVal <= 39) || (rhVal >= 61 && rhVal <= 65)) {
+                rhColor = "var(--warning)";
+                rhBadgeClass = "status-warning";
+                rhText = "RH ปานกลาง";
+            } else if ((rhVal >= 40 && rhVal <= 44) || (rhVal >= 56 && rhVal <= 60)) {
+                rhColor = "var(--success)";
+                rhBadgeClass = "status-normal";
+                rhText = "RH ดี";
+            } else { 
+                rhColor = "#38bdf8";
+                rhBadgeClass = "status-normal";
+                rhText = "RH ดีเยี่ยม";
             }
             if(airRhNode) airRhNode.style.color = rhColor;
 
-            let rhStatusClass = isRhNormal ? "status-info" : "status-danger";
-            let rhText = isRhNormal ? "RH ปกติ" : "RH ไม่ปกติ";
-
             if (cardAir) {
-                if (airVal > 25 || co2Val > 1000 || tempVal > 27.5 || rhVal < 40.0 || rhVal > 70.0) {
+                if (airVal >= 25.1 || co2Val >= 1001 || tempVal < 22.0 || tempVal >= 27.1 || 
+                    rhVal < 35 || rhVal >= 66) {
                     cardAir.classList.add('card-alert-danger');
                 } else {
                     cardAir.classList.remove('card-alert-danger');
@@ -1270,22 +1689,11 @@
             }
 
             if (airContainer) {
-                let airStatus = `<span class="card-status ${airStatusClass}"><i class="fa-solid fa-circle-exclamation"></i> ${airText}</span>`;
-                let co2Status = `<span class="card-status ${co2StatusClass}"><i class="fa-solid fa-cloud"></i> ${co2Text}</span>`;
-                let tempStatus = `<span class="card-status ${tempStatusClass}"><i class="fa-solid fa-temperature-high"></i> ${tempText}</span>`;
-                let rhStatus = `<span class="card-status ${rhStatusClass}"><i class="fa-solid fa-droplet"></i> ${rhText}</span>`;
+                let airStatus = `<span class="card-status ${airBadgeClass}"><i class="fa-solid fa-circle-exclamation"></i> ${airText}</span>`;
+                let co2Status = `<span class="card-status ${co2BadgeClass}"><i class="fa-solid fa-cloud"></i> ${co2Text}</span>`;
+                let tempStatus = `<span class="card-status ${tempBadgeClass}"><i class="fa-solid fa-temperature-high"></i> ${tempText}</span>`;
+                let rhStatus = `<span class="card-status ${rhBadgeClass}"><i class="fa-solid fa-droplet"></i> ${rhText}</span>`;
                 airContainer.innerHTML = airStatus + co2Status + tempStatus + rhStatus;
-            }
-
-            const now = new Date();
-            const currentHour = now.getHours();
-            const todayDate = now.getDate();
-
-            if (window.masterDatabaseStore && window.masterDatabaseStore[todayDate]) {
-                window.masterDatabaseStore[todayDate]['air_pm'][currentHour] = airVal;
-                window.masterDatabaseStore[todayDate]['air_co2'][currentHour] = co2Val;
-                window.masterDatabaseStore[todayDate]['air_temp'][currentHour] = parseFloat(tempVal.toFixed(1));
-                window.masterDatabaseStore[todayDate]['air_rh'][currentHour] = parseFloat(rhVal.toFixed(1));
             }
         };
     </script>
@@ -1302,6 +1710,8 @@
         let masterDatabaseStore = {}; 
 
         window.monthlyVacuumTotals = { p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0 };
+        window.monthlyVacuum2Totals = { p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0 };
+        window.monthlyAirCompTotals = { p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0 };
 
         const baseHoursLabel = [
             '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', 
@@ -1311,33 +1721,43 @@
 
         const dataTemplates = {
             oxygen: [
-                { key: 'o2_left', type: 'line', label: 'แรงดันฝั่งซ้าย (PSI)', color: '#10b981', min: 0, max: 2500, base: [1650,1650,1700,1700,1650,1600,1550,1500,1450,1400,1350,1300,1250,1200,1150,1900,1850,1800,1800,1750,1750,1700,1700,1650] },
-                { key: 'o2_right', type: 'line', label: 'แรงดันฝั่งขวา (PSI)', color: '#a855f7', min: 0, max: 2500, base: [1550,1600,1600,1650,1700,1750,1750,1650,1600,1550,1500,1450,1400,1350,1350,1350,1400,1450,1500,1550,1600,1650,1500,1450] }
+                { key: 'o2_left', type: 'line', label: 'แรงดันฝั่งซ้าย (PSI)', color: '#10b981', min: 0, max: 2500, base: new Array(24).fill(0) },
+                { key: 'o2_right', type: 'line', label: 'แรงดันฝั่งขวา (PSI)', color: '#a855f7', min: 0, max: 2500, base: new Array(24).fill(0) }
             ],
             oxygen_source: [
-                { key: 'o2_source', type: 'line', label: 'แรงดันก๊าซต้นทางควบคุม (PSI)', color: '#38bdf8', min: 0, max: 70, base: [53,54,55,53,54,56,54,55,53,54,55,53,54,55,56,54,55,53,54,55,54,53,54,54] }
+                { key: 'o2_source', type: 'line', label: 'แรงดันก๊าซต้นทางควบคุม (PSI)', color: '#38bdf8', min: 0, max: 70, base: new Array(24).fill(0) }
             ],
             oxygen_destination: [
-                { key: 'o2_destination', type: 'line', label: 'แรงดันก๊าซปลายทางควบคุม (PSI)', color: '#38bdf8', min: 0, max: 70, base: [52.3,52.8,52.5,52.7,52.2,52.9,52.4,52.6,52.8,52.3,52.5,52.7,52.9,52.1,52.4,52.8,52.6,52.3,52.7,52.5,52.8,52.2,52.6,52.4] }
+                { key: 'o2_destination', type: 'line', label: 'แรงดันก๊าซปลายทางควบคุม (PSI)', color: '#38bdf8', min: 0, max: 70, base: new Array(24).fill(0) }
             ],
             vacuum: [
                 { key: 'vac_summary', type: 'counter', label: 'รายงานสรุปจำนวนรอบการทำงาน และจำนวนอาการผิดปกติ Overload ประจำวัน' }
+            ],
+            vacuum_2: [
+                { key: 'vac2_summary', type: 'counter', label: 'รายงานสรุปจำนวนรอบการทำงาน และจำนวนอาการผิดปกติ Overload ประจำวัน' }
+            ],
+            air_compressor: [
+                { key: 'aircomp_summary', type: 'counter', label: 'รายงานสรุปจำนวนรอบการทำงาน และจำนวนอาการผิดปกติ Overload ประจำวัน' }
             ],
             nitrous: [
                 { key: 'nitrous_p', type: 'line', label: 'แรงดันก๊าซ N₂O (psi)', color: '#f43f5e', min: 0, max: 70, base: new Array(24).fill(0) }
             ],
             or_room: [
                 { key: 'or_angle', type: 'line', label: 'มุมเปิดบานประตูลม (องศา °)', color: '#38bdf8', min: 0, max: 90, base: new Array(24).fill(0), isBinary: false },
-                { key: 'or_pressure', type: 'line', label: 'สถานะแรงดันภายในห้องห้องผ่าตัด (1 = Positive Pressure, 0 = Negative)', color: '#a855f7', min: 0, max: 1, base: new Array(24).fill(1), isBinary: true }
+                { key: 'or_pressure', type: 'line', label: 'สถานะแรงดันภายในห้องผ่าตัด (1 = Positive Pressure, 0 = Negative)', color: '#a855f7', min: 0, max: 1, base: new Array(24).fill(1), isBinary: true }
+            ],
+            water_flow: [
+                { key: 'water_flow_stats', type: 'flow_stat', label: 'อัตราการไหลของน้ำระบบบำบัดน้ำเสีย' }
             ],
             water: [
                 { key: 'water_ph', type: 'line', label: 'ระบบวัดค่ากรด-ด่าง (pH)', color: '#60a5fa', min: 0, max: 14, base: new Array(24).fill(0) },
                 { key: 'water_cl', type: 'line', label: 'ปริมาณคลอรีนตกค้าง (mg/L)', color: '#2dd4bf', min: 0, max: 5, base: new Array(24).fill(0) },
                 { key: 'water_do', type: 'line', label: 'ปริมาณออกซิเจนละลายน้ำ DO (mg/L)', color: '#e11d48', min: 0, max: 15, base: new Array(24).fill(0) }
             ],
-            air: [
-                { key: 'air_info', type: 'info', label: 'รายงานสรุปข้อมูลคุณภาพอากาศภายในอาคาร' }
-            ],
+            air1: [ { key: 'air_info', type: 'info', label: 'รายงานสรุปข้อมูลคุณภาพอากาศภายในอาคาร (ชั้น 1)' } ],
+            air2: [ { key: 'air_info', type: 'info', label: 'รายงานสรุปข้อมูลคุณภาพอากาศภายในอาคาร (ชั้น 2)' } ],
+            air3: [ { key: 'air_info', type: 'info', label: 'รายงานสรุปข้อมูลคุณภาพอากาศภายในอาคาร (ชั้น 3)' } ],
+            air4: [ { key: 'air_info', type: 'info', label: 'รายงานสรุปข้อมูลคุณภาพอากาศภายในอาคาร (ทันตกรรม ชั้น2)' } ],
             external_links: [
                 { key: 'ext_links_panel', type: 'links', label: 'แผงควบคุมระบบลิงก์ภายนอก' }
             ]
@@ -1365,9 +1785,6 @@
 
         function buildMasterDatabase() {
             const totalDays = getDaysInCurrentMonth();
-            const now = new Date();
-            const todayDate = now.getDate();
-            const currentHour = now.getHours();
 
             for (let day = 1; day <= totalDays; day++) {
                 masterDatabaseStore[day] = {};
@@ -1378,46 +1795,17 @@
                             masterDatabaseStore[day][config.key] = {
                                 p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0
                             };
+                        } else if (config.type === 'flow_stat') {
+                            masterDatabaseStore[day][config.key] = {
+                                total_volume: 0.0
+                            };
                         } else if (config.type === 'links' || config.type === 'info') {
                             masterDatabaseStore[day][config.key] = true;
                         } else {
-                            let mockHours = [];
-                            for (let h = 0; h < 24; h++) {
-                                if (day === todayDate && h > currentHour) {
-                                    mockHours.push(null);
-                                } else {
-                                    if (config.isBinary) {
-                                        mockHours.push(config.base[h]);
-                                    } else {
-                                        if (config.key === 'o2_left' || config.key === 'o2_right') {
-                                            let randomValue = Math.floor(Math.random() * (1800 - 1500 + 1)) + 1500;
-                                            mockHours.push(randomValue);
-                                        } else if (config.key === 'o2_source') {
-                                            let randomValue = (Math.random() * (57 - 55)) + 55;
-                                            mockHours.push(parseFloat(randomValue.toFixed(1)));
-                                        } else if (config.key === 'o2_destination') {
-                                            let randomValue = (Math.random() * (53.0 - 52.0)) + 52.0;
-                                            mockHours.push(parseFloat(randomValue.toFixed(1)));
-                                        } else if (config.key === 'or_angle' || config.key === 'nitrous_p' || config.key === 'water_ph' || config.key === 'water_cl' || config.key === 'water_do') {
-                                            mockHours.push(config.base[h]);
-                                        } else {
-                                            let baseVal = config.base[h] !== undefined ? config.base[h] : (config.min + config.max)/2;
-                                            let variance = (Math.random() - 0.5) * (config.max - config.min) * 0.15;
-                                            let finalVal = Math.max(config.min, Math.min(config.max, baseVal + variance));
-                                            mockHours.push(parseFloat(finalVal.toFixed(config.key === 'water_cl' ? 2 : 1)));
-                                        }
-                                    }
-                                }
-                            }
-                            masterDatabaseStore[day][config.key] = mockHours;
+                            masterDatabaseStore[day][config.key] = new Array(24).fill(0.0);
                         }
                     });
                 }
-                masterDatabaseStore[day]['o2_total'] = new Array(24).fill(null);
-                masterDatabaseStore[day]['air_pm'] = new Array(24).fill(0);
-                masterDatabaseStore[day]['air_co2'] = new Array(24).fill(0);
-                masterDatabaseStore[day]['air_temp'] = new Array(24).fill(0);
-                masterDatabaseStore[day]['air_rh'] = new Array(24).fill(0);
             }
             window.masterDatabaseStore = masterDatabaseStore;
         }
@@ -1443,34 +1831,6 @@
             document.getElementById('val-ph').innerText = "0";
             document.getElementById('val-cl').innerText = "0";
             document.getElementById('val-do').innerText = "0";
-
-            setInterval(() => {
-                const now = new Date();
-                const currentHour = now.getHours();
-                const todayDate = now.getDate();
-
-                if (masterDatabaseStore[todayDate]) {
-                    masterDatabaseStore[todayDate]['nitrous_p'][currentHour] = 0;
-                    masterDatabaseStore[todayDate]['or_angle'][currentHour] = 0;
-                    masterDatabaseStore[todayDate]['or_pressure'][currentHour] = 1;
-                    masterDatabaseStore[todayDate]['water_ph'][currentHour] = 0;
-                    masterDatabaseStore[todayDate]['water_cl'][currentHour] = 0;
-                    masterDatabaseStore[todayDate]['water_do'][currentHour] = 0;
-                }
-
-                if (activeDaySelected === todayDate && currentSelectedType !== 'vacuum' && currentSelectedType !== 'air') {
-                    if (currentSelectedType !== 'external_links' && Object.keys(initializedCharts).length > 0) {
-                        for (let key in initializedCharts) {
-                            if (key === 'o2_total' || key === 'o2_left' || key === 'o2_right' || key === 'o2_source' || key === 'o2_destination') continue; 
-                            let chartObj = initializedCharts[key];
-                            if (chartObj && masterDatabaseStore[todayDate][key]) {
-                                chartObj.data.datasets[0].data = masterDatabaseStore[todayDate][key];
-                                chartObj.update('none'); 
-                            }
-                        }
-                    }
-                }
-            }, 1000);
         }
         
         runLiveDashboardUpdates();
@@ -1522,7 +1882,7 @@
             document.getElementById('detailSection').style.display = 'block';
 
             const dateSelectorWrapper = document.getElementById('dateSelectorWrapper');
-            if (type === 'external_links' || type === 'air') {
+            if (type === 'external_links' || type.startsWith('air')) {
                 dateSelectorWrapper.style.display = 'none';
             } else {
                 dateSelectorWrapper.style.display = 'block';
@@ -1560,6 +1920,10 @@
             }
 
             renderSectionCharts(new Date().getDate());
+
+            setTimeout(() => {
+                document.getElementById('detailSection').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
         }
 
         function renderSectionCharts(dayNumber) {
@@ -1567,12 +1931,9 @@
             activeDaySelected = dayNumber;
             window.activeDaySelected = activeDaySelected;
 
-            const container = document.getElementById('dynamicChartsContainer');
-            container.innerHTML = "";
-
             if (currentSelectedType === 'external_links') {
                 document.getElementById('detailTitle').innerHTML = `<i class="fa-solid fa-network-wired" style="color: var(--primary);"></i> ${currentSelectedTitle}`;
-            } else if (currentSelectedType === 'air') {
+            } else if (currentSelectedType.startsWith('air')) {
                 document.getElementById('detailTitle').innerHTML = `<i class="fa-solid fa-wind" style="color: var(--primary);"></i> รายละเอียด: ${currentSelectedTitle}`;
             } else {
                 document.getElementById('detailTitle').innerHTML = `<i class="fa-solid fa-chart-line" style="color: var(--primary);"></i> ตรวจสอบข้อมูลย้อนหลัง: ${currentSelectedTitle} ประจำวันที่ ${dayNumber} ${currentMonthName}`;
@@ -1581,10 +1942,45 @@
             const targetConfigs = dataTemplates[currentSelectedType];
             if (!targetConfigs) return;
 
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(dayNumber).padStart(2, '0');
+            const dateStr = `${yyyy}-${mm}-${dd}`;
+
+            if (currentSelectedType === 'oxygen' && window.fetchO2HistoryData) {
+                window.fetchO2HistoryData(dateStr, ({ leftArray, rightArray }) => {
+                    masterDatabaseStore[dayNumber]['o2_left'] = leftArray;
+                    masterDatabaseStore[dayNumber]['o2_right'] = rightArray;
+                    drawChartsUI(targetConfigs, dayNumber);
+                });
+            } else if (currentSelectedType === 'oxygen_source' && window.fetchSourceHistoryData) {
+                window.fetchSourceHistoryData(dateStr, (historyData) => {
+                    masterDatabaseStore[dayNumber]['o2_source'] = historyData;
+                    drawChartsUI(targetConfigs, dayNumber);
+                });
+            } else if (currentSelectedType === 'oxygen_destination' && window.fetchDestHistoryData) {
+                window.fetchDestHistoryData(dateStr, (historyData) => {
+                    masterDatabaseStore[dayNumber]['o2_destination'] = historyData;
+                    drawChartsUI(targetConfigs, dayNumber);
+                });
+            } else {
+                drawChartsUI(targetConfigs, dayNumber);
+            }
+        }
+
+        function drawChartsUI(targetConfigs, dayNumber) {
+            const container = document.getElementById('dynamicChartsContainer');
+            
+            if (container.offsetHeight > 0) {
+                container.style.minHeight = container.offsetHeight + 'px';
+            }
+
+            container.innerHTML = "";
+
             const computedStyle = getComputedStyle(document.body);
             const currentTextColor = computedStyle.getPropertyValue('--text-main').trim();
             const currentGridColor = computedStyle.getPropertyColor ? computedStyle.getPropertyColor('--chart-grid') : computedStyle.getPropertyValue('--chart-grid').trim();
-
             const chartFontConfig = { family: "'Chakrapetch', 'Inter', sans-serif", size: 11, weight: '600' };
 
             targetConfigs.forEach(config => {
@@ -1602,13 +1998,13 @@
                     linksGrid.className = "external-links-grid";
                     linksGrid.innerHTML = `
                         <a href="https://yang8860.github.io/Oxygen-monitor/" target="_blank" class="ext-link-btn">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>  ระบบสำรองก๊าสออกซิเจน Oxygen
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบสำรองก๊าซออกซิเจน Oxygen O₂
                         </a>
                         <a href="https://yang8860.github.io/Source-oxygen-dashboard/" target="_blank" class="ext-link-btn">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>  ระบบ Source Oxygen ต้นทาง
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบ Source Oxygen ต้นทาง O₂⭡
                         </a>
                         <a href="https://yang8860.github.io/Distal-oxygen/" target="_blank" class="ext-link-btn">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>  ระบบ Distal Oxygen ปลายทาง
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบ Distal Oxygen ปลายทาง O₂⭣
                         </a>
                         <a href="javascript:void(0)" class="ext-link-btn ext-link-disabled" style="cursor: default; color: var(--danger); border-color: rgba(248, 113, 113, 0.3);">
                             <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--danger);"></i> ระบบไนตรัสออกไซด์ N₂O (ยังไม่พร้อมใช้งาน)
@@ -1616,10 +2012,29 @@
                         <a href="https://yang8860.github.io/Vacuum-monitor/" target="_blank" class="ext-link-btn">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบสูญญากาศ Vacuum อาคารเฉลิมพระเกียรติ
                         </a>
+                        <a href="https://yang8860.github.io/Vacuum-er./" target="_blank" class="ext-link-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบสูญญากาศ Vacuum อาคารอุบัติเหตุฉุกเฉิน
+                        </a>
+                        <a href="https://yang8860.github.io/Air-Compressor-er/" target="_blank" class="ext-link-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบอัดอากาศ Air Comp. อาคารอุบัติเหตุฉุกเฉิน
+                        </a>
                         <a href="https://yang8860.github.io/Air-Quality/" target="_blank" class="ext-link-btn">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบคุณภาพอากาศภายในอาคาร                
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบคุณภาพอากาศภายในอาคาร OPD ชั้น1             
+                        </a>
+                        <a href="https://yang8860.github.io/Air-Quality2/" target="_blank" class="ext-link-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบคุณภาพอากาศภายในอาคาร OPD ชั้น2             
+                        </a>
+                        <a href="https://yang8860.github.io/Air-Quality3/" target="_blank" class="ext-link-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบคุณภาพอากาศภายในอาคาร OPD ชั้น3             
+                        </a>
+                        <a href="https://yang8860.github.io/Air-Quality-DT/" target="_blank" class="ext-link-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> ระบบคุณภาพอากาศภายในอาคาร ทันตกรรม ชั้น2             
+                        </a>
                         <a href="javascript:void(0)" class="ext-link-btn ext-link-disabled" style="cursor: default; color: var(--danger); border-color: rgba(248, 113, 113, 0.3);">
                             <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--danger);"></i> ระบบห้องผ่าตัด (ยังไม่พร้อมใช้งาน)
+                        </a>
+                        <a href="javascript:void(0)" class="ext-link-btn ext-link-disabled" style="cursor: default; color: var(--danger); border-color: rgba(248, 113, 113, 0.3);">
+                            <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--danger);"></i> ระบบอัตราการไหลของน้ำ (ยังไม่พร้อมใช้งาน)
                         </a>
                         <a href="javascript:void(0)" class="ext-link-btn ext-link-disabled" style="cursor: default; color: var(--danger); border-color: rgba(248, 113, 113, 0.3);">
                             <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--danger);"></i> ระบบคุณภาพน้ำบ่อบำบัดน้ำเสีย (ยังไม่พร้อมใช้งาน)
@@ -1636,11 +2051,32 @@
                     `;
                     chartWrapper.appendChild(infoBlock);
                     container.appendChild(chartWrapper);
+                } else if (config.type === 'flow_stat') {
+                    let dbData = { total_volume: 0.0 };
+                    if (window.masterDatabaseStore && window.masterDatabaseStore[dayNumber] && window.masterDatabaseStore[dayNumber][config.key]) {
+                        dbData = window.masterDatabaseStore[dayNumber][config.key];
+                    }
+
+                    const flowBlock = document.createElement('div');
+                    flowBlock.className = "vacuum-pump-block";
+                    flowBlock.innerHTML = `
+                        <div class="vacuum-pump-title">
+                            <i class="fa-solid fa-faucet-drip" style="color:var(--primary)"></i> ปริมาณการไหลของน้ำ วันที่ ${dayNumber}
+                        </div>
+                        <div class="v-stats-row" style="padding: 24px;">
+                            <span class="v-label" style="font-size: 16px;">ปริมาณน้ำทั้งหมดที่ไหลผ่าน</span>
+                            <span class="v-count-number v-color-run" style="font-size: 32px;" id="water_flow_day_val">${dbData.total_volume.toFixed(2)} <span style="font-size: 16px; color: var(--text-muted);">m³</span></span>
+                        </div>
+                    `;
+                    chartWrapper.appendChild(flowBlock);
+                    container.appendChild(chartWrapper);
                 } else if (config.type === 'counter') {
                     let dbData = { p1_run: 0, p1_overload: 0, p2_run: 0, p2_overload: 0 };
                     
                     if (dayNumber === 'monthly') {
-                        dbData = window.monthlyVacuumTotals;
+                        if (currentSelectedType === 'vacuum_2') dbData = window.monthlyVacuum2Totals;
+                        else if (currentSelectedType === 'air_compressor') dbData = window.monthlyAirCompTotals;
+                        else dbData = window.monthlyVacuumTotals;
                     } else {
                         if (window.masterDatabaseStore && window.masterDatabaseStore[dayNumber] && window.masterDatabaseStore[dayNumber][config.key]) {
                             let savedData = window.masterDatabaseStore[dayNumber][config.key];
@@ -1658,7 +2094,7 @@
                                 <i class="fa-solid fa-gears" style="color:var(--primary)"></i> สถิติ ปั๊มตัวที่ 1 (Pump 1 Control)
                             </div>
                             <div class="v-stats-row">
-                                <span class="v-label">จำนวนรอการทำงานของปั้ม</span>
+                                <span class="v-label">จำนวนรอบการทำงานของปั๊ม</span>
                                 <span class="v-count-number v-color-run" id="p1_live_run">${dbData.p1_run}</span>
                             </div>
                             <div class="v-stats-row">
@@ -1672,7 +2108,7 @@
                                 <i class="fa-solid fa-gears" style="color:var(--warning)"></i> สถิติ ปั๊มตัวที่ 2 (Pump 2 Control)
                             </div>
                             <div class="v-stats-row">
-                                <span class="v-label">จำนวนรอบการทำงานของปั้ม</span>
+                                <span class="v-label">จำนวนรอบการทำงานของปั๊ม</span>
                                 <span class="v-count-number v-color-run" id="p2_live_run">${dbData.p2_run}</span>
                             </div>
                             <div class="v-stats-row">
@@ -1710,9 +2146,7 @@
                                 tension: isORPressure ? 0 : 0.25, 
                                 stepped: isORPressure ? true : false,
                                 fill: true,
-                                pointRadius: function(context) {
-                                    return context.dataset.data[context.dataIndex] === null ? 0 : 3.5;
-                                },
+                                pointRadius: 3.5,
                                 pointBackgroundColor: config.color,
                                 pointBorderColor: '#ffffff',
                                 pointBorderWidth: 1.5,
@@ -1771,8 +2205,12 @@
                     });
                 }
             });
+
             window.initializedCharts = initializedCharts;
-            document.getElementById('detailSection').scrollIntoView({ behavior: 'smooth' });
+
+            setTimeout(() => {
+                container.style.minHeight = 'auto';
+            }, 100);
         }
 
         function hexToRgbA(hex, alpha){
